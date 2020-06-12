@@ -10,12 +10,10 @@ public class PlayerMovement : MonoBehaviour
 	public InputActionMap playerActions;
 
 	private float horizontalMove = 0f;
-	private bool jump = false;
 
 	void Awake()
 	{
 		playerActions["Jump"].performed += ctx => controller.Jump();
-		//playerActions["Horizontal"].started += ctx => controller.Move(ctx.ReadValue<float>());
 	}
 
 	void Update()

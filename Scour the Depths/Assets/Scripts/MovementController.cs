@@ -8,10 +8,11 @@ public class MovementController : MonoBehaviour
 	[SerializeField] private float jumpHeight;
 	[Range(0,1)] [SerializeField] private float crouchSpeed;
 	[SerializeField] private float acceleration;
+	[SerializeField] private float airAcceleration;
 	[SerializeField] private float maxSpeed;
 	[SerializeField] private short maxJumps;
-    [SerializeField] private float boxRayDepth;
     [SerializeField] private float boxRayWidth;
+	[SerializeField] private float boxRayDistance;
 	[SerializeField] private LayerMask groundLayerMask;
 	
 	private Rigidbody2D playerRigidBody;
@@ -37,9 +38,12 @@ public class MovementController : MonoBehaviour
 
 	public void Move(float move)
 	{
-		//updates velocity vector of the player
-		Vector3 targetVelocity = new Vector2(maxSpeed * move, playerRigidBody.velocity.y);
-		playerRigidBody.velocity = Vector3.SmoothDamp(playerRigidBody.velocity, targetVelocity, ref velocity, acceleration);
+        Vector3 targetVelocity = new Vector2(maxSpeed * move, playerRigidBody.velocity.y);
+        if(grounded)
+			playerRigidBody.velocity = Vector3.SmoothDamp(playerRigidBody.velocity, targetVelocity, ref velocity, acceleration);
+        else
+			playerRigidBody.velocity = Vector3.SmoothDamp(playerRigidBody.velocity, targetVelocity, ref velocity, airAcceleration);
+		
 		// If the input is moving the player right and the player is facing left...
 		if (move > 0 && !facingRight)
 			Flip();
@@ -54,6 +58,7 @@ public class MovementController : MonoBehaviour
 			jumps = 0;
 		if(jumps < maxJumps)
 		{
+            playerRigidBody.velocity = new Vector2(playerRigidBody.velocity.x, 0);
 			playerRigidBody.AddForce(Vector2.up * jumpForce * playerRigidBody.mass, ForceMode2D.Impulse);
 			jumps++;
 		}
@@ -72,7 +77,9 @@ public class MovementController : MonoBehaviour
 
     private bool IsGrounded()
     {
-        RaycastHit2D raycastHit = Physics2D.BoxCast(circleCollider.bounds.center, new Vector2(boxRayWidth, boxRayDepth), 0f, Vector2.down, boxRayDepth, groundLayerMask);
+		//Debug.DrawRay(circleCollider.bounds.center, Vector3.down * (circleCollider.bounds.extents.y + boxRayDistance), Color.green);
+        RaycastHit2D raycastHit = Physics2D.BoxCast(circleCollider.bounds.center, new Vector2(boxRayWidth, circleCollider.bounds.extents.y), 0f, Vector2.down, boxRayDistance, groundLayerMask);
+		//Debug.Log(raycastHit.collider);
 		return raycastHit.collider != null;
     }
 
