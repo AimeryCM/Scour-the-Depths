@@ -14,6 +14,7 @@ public class MovementController : MonoBehaviour
     [SerializeField] private float boxRayWidth;
 	[SerializeField] private float boxRayDistance;
 	[SerializeField] private LayerMask groundLayerMask;
+	public Animator animator;
 	
 	private Rigidbody2D playerRigidBody;
 	private Vector3 velocity = Vector3.zero;
@@ -33,7 +34,9 @@ public class MovementController : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		grounded = IsGrounded();
+		animator.SetBool("Grounded", grounded = IsGrounded());
+		animator.SetFloat("XSpeed", Mathf.Abs(playerRigidBody.velocity.x));
+		animator.SetFloat("YSpeed", playerRigidBody.velocity.y);
 	}
 
 	public void Move(float move)
@@ -58,7 +61,8 @@ public class MovementController : MonoBehaviour
 			jumps = 0;
 		if(jumps < maxJumps)
 		{
-            playerRigidBody.velocity = new Vector2(playerRigidBody.velocity.x, 0);
+            animator.SetTrigger("Jump");
+			playerRigidBody.velocity = new Vector2(playerRigidBody.velocity.x, 0);
 			playerRigidBody.AddForce(Vector2.up * jumpForce * playerRigidBody.mass, ForceMode2D.Impulse);
 			jumps++;
 		}
