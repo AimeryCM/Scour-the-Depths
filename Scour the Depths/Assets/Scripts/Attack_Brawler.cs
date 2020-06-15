@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Attack_Brawler : MonoBehaviour
@@ -11,7 +9,7 @@ public class Attack_Brawler : MonoBehaviour
     public Transform attackPos;
     public LayerMask enemyLayers;
     public float attackRadius;
-    public short punchDamage;
+    public int punchDamage;
 
     void Awake()
     {
@@ -39,7 +37,7 @@ public class Attack_Brawler : MonoBehaviour
         Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(attackPos.position, attackRadius, enemyLayers);
         foreach (Collider2D collider2D in enemiesToDamage)
         {
-            collider2D.GetComponent<Enemy>().Damage(punchDamage);
+            collider2D.GetComponent<Enemy>().Damage(punchDamage, false);
         }
     }
 
