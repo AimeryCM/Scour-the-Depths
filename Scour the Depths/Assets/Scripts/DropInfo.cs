@@ -36,9 +36,9 @@ public class DropInfo : ScriptableObject
 		float sumPrev = 0f;
 		foreach (QuantityRarity qrare in values.rarities)
 		{
-			Debug.Log("sumPrev: " + sumPrev + " Rarity: " + qrare.rarity + " randomValue: " + randomValue);
+			//Debug.Log("sumPrev: " + sumPrev + " Rarity: " + qrare.rarity + " randomValue: " + randomValue);
 			if(randomValue >= sumPrev && (qrare.rarity + sumPrev) >= randomValue){
-				Debug.Log("Returning " + qrare.quantity);
+				//Debug.Log("Returning " + qrare.quantity);
 				return qrare.quantity;
 			}
 			else

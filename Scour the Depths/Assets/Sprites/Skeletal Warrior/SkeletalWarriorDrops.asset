@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SkeletalWarriorDrops
   m_EditorClassIdentifier: 
   rarityInfo:
-  - item: {fileID: 4191301834595921238, guid: 8dc723aa7436a4a4a90ed0464074c2a5, type: 3}
+  - item: {fileID: 6247136870494320647, guid: 8dc723aa7436a4a4a90ed0464074c2a5, type: 3}
     rarities:
     - quantity: 1
       rarity: 0.25
@@ -21,3 +21,7 @@ MonoBehaviour:
       rarity: 0.5
     - quantity: 3
       rarity: 0.25
+  - item: {fileID: 3828533364415722165, guid: c58b6289459695147a1d2baca40d7097, type: 3}
+    rarities:
+    - quantity: 1
+      rarity: 1
