@@ -12,3 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d5f8d19fd57a83428002746d95a5abb, type: 3}
   m_Name: SkeletalWarriorDrops
   m_EditorClassIdentifier: 
+  rarityInfo:
+  - item: {fileID: 4191301834595921238, guid: 8dc723aa7436a4a4a90ed0464074c2a5, type: 3}
+    rarities:
+    - quantity: 1
+      rarity: 0.25
+    - quantity: 2
+      rarity: 0.5
+    - quantity: 3
+      rarity: 0.25

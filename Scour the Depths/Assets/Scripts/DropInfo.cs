@@ -17,13 +17,13 @@ public class DropInfo : ScriptableObject
 	[System.Serializable]
 	public struct ItemRarity
 	{
-		public Item item;
+		public GameObject item;
 		public List<QuantityRarity> rarities;
 	}
 
 	public struct ItemQuantity
 	{
-		public Item item;
+		public GameObject item;
 		public int quantity;
 	}
 
@@ -36,8 +36,11 @@ public class DropInfo : ScriptableObject
 		float sumPrev = 0f;
 		foreach (QuantityRarity qrare in values.rarities)
 		{
-			if(qrare.rarity > sumPrev && qrare.rarity < randomValue)
+			Debug.Log("sumPrev: " + sumPrev + " Rarity: " + qrare.rarity + " randomValue: " + randomValue);
+			if(randomValue >= sumPrev && (qrare.rarity + sumPrev) >= randomValue){
+				Debug.Log("Returning " + qrare.quantity);
 				return qrare.quantity;
+			}
 			else
 				sumPrev += qrare.rarity;
 		}
