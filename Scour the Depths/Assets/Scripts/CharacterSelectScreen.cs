@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class CharacterSelectScreen : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	public GameObject panelPrefab;
+	public short panelCount = 3;
+	private List<GameObject> panels;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	void Start()
+	{
+		for(int x = 0; x < panelCount; x++)
+		{
+			GameObject current = Instantiate(panelPrefab, Vector3.zero, Quaternion.identity);
+			RectTransform rTrans = current.GetComponent<RectTransform>();
+			//rTrans.
+			panels.Add(current);
+
+		}
+	}
+
 }

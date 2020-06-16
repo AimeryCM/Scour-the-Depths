@@ -5,49 +5,63 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "InformationHolders", menuName = "Monster Drop Info")]
 public class DropInfo : ScriptableObject
 {
-	private List<ItemDropInfo> infos;
+	[SerializeField] private List<ItemRarity> rarityInfo;
 
-	public class ItemDropInfo
+	[System.Serializable]
+	public struct QuantityRarity
 	{
-		private Item item;
-		private Dictionary<int, float> rarities;
-		public ItemDropInfo(Item item, Dictionary<int, float> rarities)
-		{
-			this.item = item;
-			this.rarities = rarities;
-		}
-
-		public Item GetItem()
-		{
-			return item;
-		}
-
-		public int DetermineDropAmount()
-		{
-			float randomValue = Random.Range(0f, 1f);
-			float sumPrev = 0f;
-			foreach (KeyValuePair<int, float> pair in rarities)
-			{
-				if(pair.Value > sumPrev && pair.Value < randomValue)
-					return pair.Key;
-				else
-					sumPrev += pair.Value;
-			}
-			return 0;
-		}
+		public int quantity;
+		[Range(0,1)] public float rarity;
 	}
 
-	public List<Item> GetDrops()
+	[System.Serializable]
+	public struct ItemRarity
 	{
-		List<Item> result = new List<Item>();
-		foreach (ItemDropInfo idInfo in infos)
+		public Item item;
+		public List<QuantityRarity> rarities;
+	}
+
+	public struct ItemQuantity
+	{
+		public Item item;
+		public int quantity;
+	}
+
+	/*
+	 * Given an ItemRarity struct, goes through the rarities associated with each value and returns a quantity
+	 */
+	private int DetermineDropAmount(ItemRarity values)
+	{
+		float randomValue = Random.Range(0f, 1f);
+		float sumPrev = 0f;
+		foreach (QuantityRarity qrare in values.rarities)
 		{
-			for(int x = 0; x < idInfo.DetermineDropAmount(); x++)
-				result.Add(idInfo.GetItem());
+			if(qrare.rarity > sumPrev && qrare.rarity < randomValue)
+				return qrare.quantity;
+			else
+				sumPrev += qrare.rarity;
+		}
+		return 0;
+	}
+	
+	/*
+	 * Returns all of the random drops dropped by this enemy
+	 */
+	public List<ItemQuantity> GetDrops()
+	{
+		List<ItemQuantity> result = new List<ItemQuantity>();
+		int val;
+		foreach (ItemRarity itemRarity in rarityInfo)
+		{
+			if((val = DetermineDropAmount(itemRarity)) != 0)
+			{
+				ItemQuantity quant = new ItemQuantity();
+				quant.item = itemRarity.item;
+				quant.quantity = val;
+				result.Add(quant);
+			}
 		}
 		return result;
 	}
 
 }
-
-
