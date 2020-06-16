@@ -17,6 +17,8 @@ public class ItemManager : MonoBehaviour
 	public void Pickup()
 	{
 		Debug.Log("Picked up " + item.itemName);
+		if(Inventory.instance.AddToInventory(item))
+			Debug.Log("Added " + item.itemName + " to the inventory");
 		Destroy(gameObject);
 	}
 }

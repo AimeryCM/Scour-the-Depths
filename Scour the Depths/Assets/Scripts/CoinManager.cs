@@ -14,6 +14,6 @@ public class CoinManager : ItemManager
 	public new void Pickup()
 	{
 		Inventory.instance.ManageCoins(1);
-		base.Pickup();
+		Destroy(gameObject);
 	}
 }

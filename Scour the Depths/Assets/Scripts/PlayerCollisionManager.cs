@@ -8,11 +8,5 @@ public class PlayerCollisionManager : MonoBehaviour
 		{
 			collision.gameObject.GetComponent<ItemManager>().Pickup();
 		}
-		if(collision.gameObject.tag == "Coin")
-		{
-			Destroy(collision.gameObject);
-			Inventory.instance.ManageCoins(1);
-			Debug.Log(Inventory.instance.GetCoins() + " coins");
-		}
 	}
 }
