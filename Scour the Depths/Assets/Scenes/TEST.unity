@@ -180,6 +180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2631a844aff500646b4f1d9554f89f3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventorySize: 16
 --- !u!4 &210154561
 Transform:
   m_ObjectHideFlags: 0

@@ -23,6 +23,7 @@ public class Inventory : MonoBehaviour
 	public void ManageCoins(int change)
 	{
 		coins = Mathf.Clamp(coins + change, 0, int.MaxValue);
+		Debug.Log(coins + " coins in the inventory");
 	}
 
 	public int GetCoins()
