@@ -17,6 +17,13 @@ public class Inventory : MonoBehaviour
 	[SerializeField] private Canvas canvas;
 	private Item[] itemList;
 	private GameObject[] hotbarSlots;
+	public InputActionMap inventoryActions;
+
+	//for generating the inventory UI
+	[SerializeField] private GameObject inventory;
+	[SerializeField] private Image inventoryBackground;
+	[SerializeField] private GameObject inventoryBox;
+	public float gapSize = 10f;
 
 	void Awake()
 	{
@@ -32,6 +39,18 @@ public class Inventory : MonoBehaviour
 			hotbarSlots[x].GetComponent<RectTransform>().SetParent(canvas.transform);
 			hotbarSlots[x].GetComponent<RectTransform>().localPosition = new Vector3(x * ((hotbarXOffset * 2)/(hotbarSize - 1)) - hotbarXOffset, hotbarYOffset, 0);
 		}
+		GenerateInventoryUI();
+		inventoryActions["Inventory"].performed += ctx => ToggleInventory();
+	}
+
+	void OnEnable()
+	{
+		inventoryActions.Enable();
+	}
+
+	void OnDisable()
+	{
+		inventoryActions.Disable();
 	}
 
 	public void ManageCoins(int change)
@@ -56,10 +75,23 @@ public class Inventory : MonoBehaviour
 				added = true;
 				if(x < hotbarSize)
 				{
-					hotbarSlots[x].GetComponent<Image>().sprite = item.icon;
+					hotbarSlots[x].GetComponent<HotbarManager>().UpdateIcon(item.icon);
 				}
 			}
 		}
 		return added;
+	}
+
+	private void GenerateInventoryUI()
+	{
+		int width = hotbarSize, height = (inventorySize / hotbarSize) + 1;
+		inventoryBackground.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, (width * inventoryBox.GetComponent<RectTransform>().rect.width) + ((width + 1) * gapSize));
+		inventoryBackground.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, (height * inventoryBox.GetComponent<RectTransform>().rect.height) + ((height + 1) * gapSize));
+	}
+
+	public void ToggleInventory()
+	{
+		Debug.Log("Toggling Inventory");
+		inventory.SetActive(!inventory.activeSelf);
 	}
 }

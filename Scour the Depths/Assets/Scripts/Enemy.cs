@@ -30,6 +30,7 @@ public class Enemy : MonoBehaviour
 		List<DropInfo.ItemQuantity> drops = dropInfo.GetDrops();
 		foreach (DropInfo.ItemQuantity iq in drops)
 		{
+			Debug.Log("Dropping " + iq.quantity + " copies of " + iq.item.name);
 			for(int x = 0; x < iq.quantity; x++)
 			{
 				GameObject gobj = Instantiate(iq.item, transform.position, Quaternion.identity);
