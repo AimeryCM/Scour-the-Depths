@@ -21,12 +21,15 @@ public class ItemManager : MonoBehaviour
 		{
 			case ItemType.Coin:
 				Inventory.instance.ManageCoins(1);
+				Destroy(gameObject);
 				break;
 			default:
 				if(Inventory.instance.AddToInventory(item))
+				{
 					Debug.Log("Added " + item.itemName + " to the inventory");
+					Destroy(gameObject);
+				}
 				break;
 		}
-		Destroy(gameObject);
 	}
 }
