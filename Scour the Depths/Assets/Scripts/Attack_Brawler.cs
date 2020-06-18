@@ -10,7 +10,7 @@ public class Attack_Brawler : MonoBehaviour
     public float attackRadius;
     public int punchDamage;
 
-    void Awake()
+    void Start()
     {
         InputHandler.instance.attackActions["Punch"].performed += ctx => InitiatePunch();
     }

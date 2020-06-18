@@ -25,7 +25,7 @@ public class MovementController : MonoBehaviour
     private CircleCollider2D circleCollider;
 
 
-    void Awake()
+    void Start()
     {
         playerRigidBody = GetComponent<Rigidbody2D>();
         circleCollider = GetComponent<CircleCollider2D>();

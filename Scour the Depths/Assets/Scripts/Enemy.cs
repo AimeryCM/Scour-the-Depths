@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour
 	[SerializeField] private GameObject damageTextPrefab;
 	private int currentHealth;
 
-    void Awake()
+    void Start()
     {
         currentHealth = maxHealth;
     }

@@ -239,6 +239,13 @@ MonoBehaviour:
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
+    - m_Name: Interact
+      m_Type: 1
+      m_ExpectedControlType: Button
+      m_Id: f48624ef-2eda-4d42-802d-41b6c618b35d
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
     m_Bindings:
     - m_Name: 1D Axis
       m_Id: b5b50251-d464-4010-9ce3-5fb5d11999a0
@@ -295,6 +302,14 @@ MonoBehaviour:
       m_Processors: 
       m_Groups: 
       m_Action: Jump
+      m_Flags: 0
+    - m_Name: 
+      m_Id: b8e62a49-80f2-436b-819b-ab6b7cd017a6
+      m_Path: <Keyboard>/e
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Interact
       m_Flags: 0
   inventoryActions:
     m_Name: Inventory Actions

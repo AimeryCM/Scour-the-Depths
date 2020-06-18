@@ -20,7 +20,10 @@ public class InputHandler : MonoBehaviour
 		if(instance != null)
 			Debug.LogWarning("More than one Inventory instance detected");
 		instance = this;
-		
+	}
+
+	void Start()
+	{
 		moveControl = character.GetComponent<MovementController>();
 		inventoryActions["Inventory"].performed += ctx => Inventory.instance.ToggleInventory();
 		playerActions["Jump"].performed += ctx => moveControl.Jump();

@@ -30,10 +30,14 @@ public class Inventory : MonoBehaviour
 		if(instance != null)
 			Debug.LogWarning("More than one Inventory instance detected");
 		instance = this;
+	}
 
+	void Start()
+	{
 		itemList = new Item[inventorySize];
 		hotbarSlots = new GameObject[hotbarSize];
 		inventorySlots = new GameObject[inventorySize];
+
 		for(int x = 0; x < hotbarSlots.Length; x++)
 		{
 			hotbarSlots[x] = Instantiate(hotbarBox, Vector3.zero, Quaternion.identity);
@@ -42,6 +46,7 @@ public class Inventory : MonoBehaviour
 		}
 		GenerateInventoryUI();
 	}
+
 	public void ManageCoins(int change)
 	{
 		coins = Mathf.Clamp(coins + change, 0, int.MaxValue);
@@ -95,6 +100,7 @@ public class Inventory : MonoBehaviour
 				inventorySlots[slotNum].name = "(" + xPos + "," + yPos + ")";
 			}
 		}
+		inventory.SetActive(false);
 	}
 
 	public void ToggleInventory()
