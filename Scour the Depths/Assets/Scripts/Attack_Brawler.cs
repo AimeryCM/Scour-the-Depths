@@ -4,7 +4,6 @@ using UnityEngine.InputSystem;
 public class Attack_Brawler : MonoBehaviour
 {
 
-    public InputActionMap attackActions;
     public Animator animator;
     public Transform attackPos;
     public LayerMask enemyLayers;
@@ -13,17 +12,7 @@ public class Attack_Brawler : MonoBehaviour
 
     void Awake()
     {
-        attackActions["Punch"].performed += ctx => InitiatePunch();
-    }
-
-    void OnEnable()
-    {
-        attackActions.Enable();
-    }
-
-    void OnDisable()
-    {
-        attackActions.Disable();
+        InputHandler.instance.attackActions["Punch"].performed += ctx => InitiatePunch();
     }
 
     void InitiatePunch()

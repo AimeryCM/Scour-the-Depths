@@ -17,7 +17,6 @@ public class Inventory : MonoBehaviour
 	[SerializeField] private Canvas canvas;
 	private Item[] itemList;
 	private GameObject[] hotbarSlots;
-	public InputActionMap inventoryActions;
 
 	//for generating the inventory UI
 	[SerializeField] private GameObject inventory;
@@ -42,19 +41,7 @@ public class Inventory : MonoBehaviour
 			hotbarSlots[x].GetComponent<RectTransform>().localPosition = new Vector3(x * ((hotbarXOffset * 2)/(hotbarSize - 1)) - hotbarXOffset, hotbarYOffset, 0);
 		}
 		GenerateInventoryUI();
-		inventoryActions["Inventory"].performed += ctx => ToggleInventory();
 	}
-
-	void OnEnable()
-	{
-		inventoryActions.Enable();
-	}
-
-	void OnDisable()
-	{
-		inventoryActions.Disable();
-	}
-
 	public void ManageCoins(int change)
 	{
 		coins = Mathf.Clamp(coins + change, 0, int.MaxValue);

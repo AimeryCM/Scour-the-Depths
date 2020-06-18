@@ -161,6 +161,7 @@ GameObject:
   m_Component:
   - component: {fileID: 210154561}
   - component: {fileID: 210154560}
+  - component: {fileID: 210154562}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -187,27 +188,6 @@ MonoBehaviour:
   hotbarBox: {fileID: 2975876008186861187, guid: a3c6fd2caa39da74c9b6f0348d69f73f,
     type: 3}
   canvas: {fileID: 1891652825}
-  inventoryActions:
-    m_Name: Inventory Actions
-    m_Id: cd8843a4-44ac-4440-a731-f7ce06599aa8
-    m_Asset: {fileID: 0}
-    m_Actions:
-    - m_Name: Inventory
-      m_Type: 1
-      m_ExpectedControlType: Button
-      m_Id: 95dbe1be-7ca6-4055-bffc-a6e424c15d23
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-    m_Bindings:
-    - m_Name: 
-      m_Id: de9a0ff7-52e6-41da-bb95-6ebe85582e22
-      m_Path: <Keyboard>/i
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Inventory
-      m_Flags: 0
   inventory: {fileID: 519455945}
   inventoryBackground: {fileID: 402480444}
   inventoryBox: {fileID: 2876995423180057976, guid: 50802dc84c4f1ba4d905f91f5f0ac0ba,
@@ -227,6 +207,137 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &210154562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 210154559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b39a10b396d644eaf7d8f41d4bb684, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: {fileID: 996909734}
+  playerActions:
+    m_Name: Player Actions
+    m_Id: 8cb9a1fb-aa46-40f1-a81c-75fa136be968
+    m_Asset: {fileID: 0}
+    m_Actions:
+    - m_Name: Horizontal
+      m_Type: 1
+      m_ExpectedControlType: Button
+      m_Id: dfb7f500-dc3a-4454-9f5f-76dd3f684062
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+    - m_Name: Jump
+      m_Type: 1
+      m_ExpectedControlType: Button
+      m_Id: 0bddc63f-d380-45ef-929c-8e0bd532d5e7
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+    m_Bindings:
+    - m_Name: 1D Axis
+      m_Id: b5b50251-d464-4010-9ce3-5fb5d11999a0
+      m_Path: 1DAxis
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Horizontal
+      m_Flags: 4
+    - m_Name: negative
+      m_Id: 30d902b8-01c4-41fa-a972-e1ec01f853c0
+      m_Path: <Keyboard>/a
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Horizontal
+      m_Flags: 8
+    - m_Name: negative
+      m_Id: be6cf55e-0ae9-417f-ab46-8c398819d6da
+      m_Path: <Keyboard>/leftArrow
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Horizontal
+      m_Flags: 8
+    - m_Name: positive
+      m_Id: f53ae475-9dda-42dd-91b7-198ac7de2ee5
+      m_Path: <Keyboard>/d
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Horizontal
+      m_Flags: 8
+    - m_Name: positive
+      m_Id: c4053f14-0e39-41f2-9a96-ff5b160d25e6
+      m_Path: <Keyboard>/rightArrow
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Horizontal
+      m_Flags: 8
+    - m_Name: 
+      m_Id: fea4d8ea-ecc5-4b19-a7c6-863444a015bd
+      m_Path: <Keyboard>/space
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Jump
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 519c4c81-1736-4a29-b0d9-4aa2df513168
+      m_Path: <Gamepad>/buttonEast
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Jump
+      m_Flags: 0
+  inventoryActions:
+    m_Name: Inventory Actions
+    m_Id: e930ad2d-3cd5-442c-891e-668a601343d2
+    m_Asset: {fileID: 0}
+    m_Actions:
+    - m_Name: Inventory
+      m_Type: 1
+      m_ExpectedControlType: Button
+      m_Id: 9f91f1f4-5809-4ef9-964d-781b33b529b7
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+    m_Bindings:
+    - m_Name: 
+      m_Id: 450375a6-3d9b-443e-9416-85275a967747
+      m_Path: <Keyboard>/i
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Inventory
+      m_Flags: 0
+  attackActions:
+    m_Name: Attack Actions
+    m_Id: 8558fae6-a81d-4a29-8e78-7aa3e7654fdd
+    m_Asset: {fileID: 0}
+    m_Actions:
+    - m_Name: Punch
+      m_Type: 1
+      m_ExpectedControlType: Button
+      m_Id: 0e54eab4-9629-42cd-ad38-175882293275
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+    m_Bindings:
+    - m_Name: 
+      m_Id: ceccd559-c526-4867-adab-6efe4aad400f
+      m_Path: <Mouse>/leftButton
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Punch
+      m_Flags: 0
 --- !u!1 &336917647
 GameObject:
   m_ObjectHideFlags: 0
@@ -749,7 +860,6 @@ GameObject:
   - component: {fileID: 996909738}
   - component: {fileID: 996909740}
   - component: {fileID: 996909743}
-  - component: {fileID: 996909742}
   - component: {fileID: 996909745}
   m_Layer: 9
   m_Name: Brawler
@@ -896,27 +1006,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 177e48ace72e4064db7e72cd00d62b47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackActions:
-    m_Name: Attack Actions
-    m_Id: 0660dec1-7506-430f-978d-d005f329d292
-    m_Asset: {fileID: 0}
-    m_Actions:
-    - m_Name: Punch
-      m_Type: 1
-      m_ExpectedControlType: Button
-      m_Id: b2a99f6a-6590-4fb3-893e-2bae4103a604
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-    m_Bindings:
-    - m_Name: 
-      m_Id: 82b7b8a9-7159-4174-889e-2eb1463c1e2f
-      m_Path: <Mouse>/leftButton
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Punch
-      m_Flags: 0
   animator: {fileID: 996909735}
   attackPos: {fileID: 200868311}
   enemyLayers:
@@ -945,95 +1034,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &996909742
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 996909734}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29d70d2b4b225f344bea1838fdd997a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controller: {fileID: 996909743}
-  playerActions:
-    m_Name: Player Actions
-    m_Id: 79c514ed-213a-4720-aa03-06e853cbf930
-    m_Asset: {fileID: 0}
-    m_Actions:
-    - m_Name: Horizontal
-      m_Type: 1
-      m_ExpectedControlType: Button
-      m_Id: 66a75e19-bad6-41a7-a803-50d34933af8d
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-    - m_Name: Jump
-      m_Type: 1
-      m_ExpectedControlType: Button
-      m_Id: df342001-d0ad-41ed-92a1-c7ef753d4e1a
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-    m_Bindings:
-    - m_Name: 
-      m_Id: a21155e1-5f2b-4465-9ddd-a5b1451938a2
-      m_Path: <Keyboard>/space
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Jump
-      m_Flags: 0
-    - m_Name: 
-      m_Id: 01a83549-83cf-426e-855d-e254a740dc8d
-      m_Path: <Gamepad>/buttonEast
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Jump
-      m_Flags: 0
-    - m_Name: 1D Axis
-      m_Id: e807071d-9cad-4d2d-8b08-0927e3e81dc0
-      m_Path: 1DAxis
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Horizontal
-      m_Flags: 4
-    - m_Name: negative
-      m_Id: 7cb200ff-a046-436c-b953-b5036460888b
-      m_Path: <Keyboard>/a
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Horizontal
-      m_Flags: 8
-    - m_Name: negative
-      m_Id: ba7f9ec8-7104-4b22-86dc-df9be09de94f
-      m_Path: <Keyboard>/leftArrow
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Horizontal
-      m_Flags: 8
-    - m_Name: positive
-      m_Id: d2bf8990-f9a9-42c7-ab9b-ce41b61771de
-      m_Path: <Keyboard>/d
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Horizontal
-      m_Flags: 8
-    - m_Name: positive
-      m_Id: 73579725-73cf-4187-b5a0-f175be4f4f7c
-      m_Path: <Keyboard>/rightArrow
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Horizontal
-      m_Flags: 8
 --- !u!114 &996909743
 MonoBehaviour:
   m_ObjectHideFlags: 0
