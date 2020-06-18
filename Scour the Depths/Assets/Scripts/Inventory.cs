@@ -24,6 +24,7 @@ public class Inventory : MonoBehaviour
 	[SerializeField] private Image inventoryBackground;
 	[SerializeField] private GameObject inventoryBox;
 	public float gapSize = 10f;
+	private GameObject[] inventorySlots;
 
 	void Awake()
 	{
@@ -33,6 +34,7 @@ public class Inventory : MonoBehaviour
 
 		itemList = new Item[inventorySize];
 		hotbarSlots = new GameObject[hotbarSize];
+		inventorySlots = new GameObject[inventorySize];
 		for(int x = 0; x < hotbarSlots.Length; x++)
 		{
 			hotbarSlots[x] = Instantiate(hotbarBox, Vector3.zero, Quaternion.identity);
@@ -72,6 +74,7 @@ public class Inventory : MonoBehaviour
 			if(itemList[x] == null)
 			{
 				itemList[x] = item;
+				inventorySlots[x].GetComponent<HotbarManager>().UpdateIcon(item.icon);
 				added = true;
 				if(x < hotbarSize)
 				{
@@ -84,9 +87,27 @@ public class Inventory : MonoBehaviour
 
 	private void GenerateInventoryUI()
 	{
-		int width = hotbarSize, height = (inventorySize / hotbarSize) + 1;
+		//creates the appropriate sized inventory background
+		int width = hotbarSize, height = inventorySize % hotbarSize != 0 ? (inventorySize / hotbarSize) + 1: (inventorySize / hotbarSize);
 		inventoryBackground.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, (width * inventoryBox.GetComponent<RectTransform>().rect.width) + ((width + 1) * gapSize));
 		inventoryBackground.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, (height * inventoryBox.GetComponent<RectTransform>().rect.height) + ((height + 1) * gapSize));
+
+		//creates inventorySize number of boxes using the previously calculated width and height
+		for(int y = 0; y < height; y++)
+		{
+			for(int x = 0; x < width; x++)
+			{
+				int slotNum = x + y * width;
+				if(slotNum >= inventorySize)
+					break;
+				inventorySlots[slotNum] = Instantiate(inventoryBox, Vector3.zero, Quaternion.identity);
+				inventorySlots[slotNum].GetComponent<RectTransform>().SetParent(inventoryBackground.transform);
+				float xPos = (gapSize * (x + 1)) + (x * inventoryBox.GetComponent<RectTransform>().rect.width);
+				float yPos = 0 - ((gapSize * (y + 1)) + (y * inventoryBox.GetComponent<RectTransform>().rect.height));
+				inventorySlots[slotNum].GetComponent<RectTransform>().anchoredPosition = new Vector2(xPos, yPos);
+				inventorySlots[slotNum].name = "(" + xPos + "," + yPos + ")";
+			}
+		}
 	}
 
 	public void ToggleInventory()

@@ -210,7 +210,7 @@ MonoBehaviour:
       m_Flags: 0
   inventory: {fileID: 519455945}
   inventoryBackground: {fileID: 402480444}
-  inventoryBox: {fileID: 2975876008186861187, guid: a3c6fd2caa39da74c9b6f0348d69f73f,
+  inventoryBox: {fileID: 2876995423180057976, guid: 50802dc84c4f1ba4d905f91f5f0ac0ba,
     type: 3}
   gapSize: 20
 --- !u!4 &210154561
@@ -347,7 +347,7 @@ GameObject:
   - component: {fileID: 402480445}
   - component: {fileID: 402480444}
   m_Layer: 5
-  m_Name: Image
+  m_Name: InventoryBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -369,7 +369,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -75, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &402480444
@@ -542,7 +542,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 375.25232, y: 529.3938}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!1 &651509366
 GameObject:

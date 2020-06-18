@@ -4,5 +4,7 @@
 			"path": "Scour the Depths"
 		}
     ],
-    "settings": {}
+	"settings": {
+		"python.pythonPath": "C:\\Users\\aimer\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe"
+	}
 }
