@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Item
+  - NPC
   - Coin
   layers:
   - Default
@@ -18,7 +19,7 @@ TagManager:
   - Ground
   - Character
   - Enemy
-  - 
+  - NPC
   - 
   - 
   - 

@@ -1,56 +1,31 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.InputSystem;
 
-public class Inventory : MonoBehaviour
+[CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory")]
+public class Inventory : ScriptableObject
 {
-    public static Inventory instance;
-	
-	private int coins = 0;
-	public short inventorySize = 16;
-	public short hotbarSize = 4;
-	public float hotbarXOffset = 220;
-	public float hotbarYOffset = -20;
-	[SerializeField] private GameObject hotbarBox;
-	[SerializeField] private Canvas canvas;
-	private Item[] itemList;
-	private GameObject[] hotbarSlots;
-
-	//for generating the inventory UI
-	[SerializeField] private GameObject inventory;
-	[SerializeField] private Image inventoryBackground;
-	[SerializeField] private GameObject inventoryBox;
-	public float gapSize = 10f;
-	private GameObject[] inventorySlots;
-
-	void Awake()
+	public struct InventoryInfo
 	{
-		if(instance != null)
-			Debug.LogWarning("More than one Inventory instance detected");
-		instance = this;
-	}
-
-	void Start()
-	{
-		itemList = new Item[inventorySize];
-		hotbarSlots = new GameObject[hotbarSize];
-		inventorySlots = new GameObject[inventorySize];
-
-		for(int x = 0; x < hotbarSlots.Length; x++)
+		public Item item;
+		public int quantity;
+		public bool occupied;
+		public InventoryInfo(Item i, int quant)
 		{
-			hotbarSlots[x] = Instantiate(hotbarBox, Vector3.zero, Quaternion.identity);
-			hotbarSlots[x].GetComponent<RectTransform>().SetParent(canvas.transform);
-			hotbarSlots[x].GetComponent<RectTransform>().localPosition = new Vector3(x * ((hotbarXOffset * 2)/(hotbarSize - 1)) - hotbarXOffset, hotbarYOffset, 0);
+			item = i;
+			quantity = quant;
+			occupied = false;
 		}
-		GenerateInventoryUI();
 	}
 
-	public void ManageCoins(int change)
+	public int size = 16;
+	private int coins;
+	private InventoryInfo[] itemList;
+
+	public int ManageCoins(int amount)
 	{
-		coins = Mathf.Clamp(coins + change, 0, int.MaxValue);
-		Debug.Log(coins + " coins in the inventory");
+		coins = Mathf.Clamp(coins + amount, 0, int.MaxValue);
+		return coins;
 	}
 
 	public int GetCoins()
@@ -58,54 +33,70 @@ public class Inventory : MonoBehaviour
 		return coins;
 	}
 
-	public bool AddToInventory(Item item)
+	public void ResetCoins()
 	{
-		bool added = false;
-		for(int x = 0; x < inventorySize && !added; x++)
+		coins = 0;
+	}
+
+	//adds 1 of the item to the inventory
+	public int Add(Item item)
+	{
+		return Add(item, 1);
+	}
+
+	public int Add(Item item, int amount)
+	{
+		if(itemList == null)
+			itemList = new InventoryInfo[size];
+		int openSpot = -1;
+		for(int x = 0; x < size; x++)
 		{
-			if(itemList[x] == null)
+			if(itemList[x].occupied)
 			{
-				itemList[x] = item;
-				inventorySlots[x].GetComponent<HotbarManager>().UpdateIcon(item.icon);
-				added = true;
-				if(x < hotbarSize)
+				if(itemList[x].item.itemName.Equals(item.itemName))
 				{
-					hotbarSlots[x].GetComponent<HotbarManager>().UpdateIcon(item.icon);
+					itemList[x].quantity += amount;
+					return x;
 				}
 			}
-		}
-		return added;
-	}
-
-	private void GenerateInventoryUI()
-	{
-		//creates the appropriate sized inventory background
-		int width = hotbarSize, height = inventorySize % hotbarSize != 0 ? (inventorySize / hotbarSize) + 1: (inventorySize / hotbarSize);
-		inventoryBackground.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, (width * inventoryBox.GetComponent<RectTransform>().rect.width) + ((width + 1) * gapSize));
-		inventoryBackground.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, (height * inventoryBox.GetComponent<RectTransform>().rect.height) + ((height + 1) * gapSize));
-
-		//creates inventorySize number of boxes using the previously calculated width and height
-		for(int y = 0; y < height; y++)
-		{
-			for(int x = 0; x < width; x++)
+			if(openSpot == -1 && itemList[x].item == null)
 			{
-				int slotNum = x + y * width;
-				if(slotNum >= inventorySize)
-					break;
-				inventorySlots[slotNum] = Instantiate(inventoryBox, Vector3.zero, Quaternion.identity);
-				inventorySlots[slotNum].GetComponent<RectTransform>().SetParent(inventoryBackground.transform);
-				float xPos = (gapSize * (x + 1)) + (x * inventoryBox.GetComponent<RectTransform>().rect.width);
-				float yPos = 0 - ((gapSize * (y + 1)) + (y * inventoryBox.GetComponent<RectTransform>().rect.height));
-				inventorySlots[slotNum].GetComponent<RectTransform>().anchoredPosition = new Vector2(xPos, yPos);
-				inventorySlots[slotNum].name = "(" + xPos + "," + yPos + ")";
+				openSpot = x;
 			}
 		}
-		inventory.SetActive(false);
+		if(openSpot != -1)
+		{
+			itemList[openSpot] = new InventoryInfo(item, amount);
+			return openSpot;
+		}
+		return -1;
 	}
 
-	public void ToggleInventory()
+	public bool Remove(Item item)
 	{
-		Debug.Log("Toggling Inventory");
-		inventory.SetActive(!inventory.activeSelf);
+		for(int x = 0; x < size; x++)
+		{
+			if(itemList[x].item.itemName.Equals(item.itemName))
+			{
+				itemList[x] = new InventoryInfo(null, 0);
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public bool Remove(Item item, int amount)
+	{
+		for(int x = 0; x < size; x++)
+		{
+			if(itemList[x].item.itemName.Equals(item.itemName))
+			{
+				itemList[x].quantity -= amount;
+				if(itemList[x].quantity <= 0)
+					itemList[x] = new InventoryInfo(null, 0);
+				return true;
+			}
+		}
+		return false;
 	}
 }

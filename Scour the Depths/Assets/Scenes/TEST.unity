@@ -181,14 +181,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2631a844aff500646b4f1d9554f89f3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventorySize: 16
   hotbarSize: 4
   hotbarXOffset: 220
   hotbarYOffset: -440
+  inventory: {fileID: 11400000, guid: a136a32d1be5a1c459712284ef00aaad, type: 2}
   hotbarBox: {fileID: 2975876008186861187, guid: a3c6fd2caa39da74c9b6f0348d69f73f,
     type: 3}
   canvas: {fileID: 1891652825}
-  inventory: {fileID: 519455945}
+  inventoryUI: {fileID: 519455945}
   inventoryBackground: {fileID: 402480444}
   inventoryBox: {fileID: 2876995423180057976, guid: 50802dc84c4f1ba4d905f91f5f0ac0ba,
     type: 3}
@@ -1267,9 +1267,12 @@ GameObject:
   - component: {fileID: 1546071987}
   - component: {fileID: 1546071986}
   - component: {fileID: 1546071985}
-  m_Layer: 0
-  m_Name: blacksmith
-  m_TagString: Untagged
+  - component: {fileID: 1546071989}
+  - component: {fileID: 1546071988}
+  - component: {fileID: 1546071990}
+  m_Layer: 11
+  m_Name: Blacksmith
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1357,6 +1360,62 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1546071988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1546071984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 833bf514f02d1f648b92b94d31a052e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  circleCollider: {fileID: 1546071989}
+  onInteractEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1546071990}
+        m_MethodName: OnInteract
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!58 &1546071989
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1546071984}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.24
+--- !u!114 &1546071990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1546071984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bafc9d346b8349d4b9eae94e8cb10f87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 1546071985}
 --- !u!1 &1669660956
 GameObject:
   m_ObjectHideFlags: 0

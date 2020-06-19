@@ -8,6 +8,7 @@ public class Item : ScriptableObject
 	public ItemType itemType = ItemType.Material;
 	public string itemName = "New Item";
 	public Sprite icon = null;
+	public int cost = 0;
 
 }
 

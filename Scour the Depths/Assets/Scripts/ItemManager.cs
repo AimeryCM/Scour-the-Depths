@@ -20,11 +20,11 @@ public class ItemManager : MonoBehaviour
 		switch(item.itemType)
 		{
 			case ItemType.Coin:
-				Inventory.instance.ManageCoins(1);
+				PlayerInventoryManager.instance.ManageCoins(1);
 				Destroy(gameObject);
 				break;
 			default:
-				if(Inventory.instance.AddToInventory(item))
+				if(PlayerInventoryManager.instance.AddToInventory(item))
 				{
 					Debug.Log("Added " + item.itemName + " to the inventory");
 					Destroy(gameObject);
