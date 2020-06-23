@@ -21,6 +21,7 @@ public class Inventory : ScriptableObject
 	public int size = 16;
 	private int coins;
 	private InventoryInfo[] itemList;
+	public ItemDatabase database;
 
 	public int ManageCoins(int amount)
 	{
@@ -53,7 +54,7 @@ public class Inventory : ScriptableObject
 		{
 			if(itemList[x].occupied)
 			{
-				if(itemList[x].item.itemName.Equals(item.itemName))
+				if(ProjectUtil.ItemsEqual(item, itemList[x].item, database))
 				{
 					itemList[x].quantity += amount;
 					return x;
@@ -67,35 +68,47 @@ public class Inventory : ScriptableObject
 		if(openSpot != -1)
 		{
 			itemList[openSpot] = new InventoryInfo(item, amount);
+			itemList[openSpot].occupied = true;
 			return openSpot;
 		}
 		return -1;
 	}
 
+	//removes all of the item
 	public bool Remove(Item item)
 	{
-		for(int x = 0; x < size; x++)
-		{
-			if(itemList[x].item.itemName.Equals(item.itemName))
-			{
-				itemList[x] = new InventoryInfo(null, 0);
-				return true;
-			}
-		}
-		return false;
+		return Remove(item, int.MaxValue);
 	}
 
 	public bool Remove(Item item, int amount)
 	{
 		for(int x = 0; x < size; x++)
 		{
-			if(itemList[x].item.itemName.Equals(item.itemName))
-			{
-				itemList[x].quantity -= amount;
-				if(itemList[x].quantity <= 0)
-					itemList[x] = new InventoryInfo(null, 0);
-				return true;
+			if(itemList[x].occupied){
+				if(ProjectUtil.ItemsEqual(item, itemList[x].item, database))
+				{
+					itemList[x].quantity -= amount;
+					if(itemList[x].quantity <= 0)
+					{
+						itemList[x] = new InventoryInfo(null, 0);
+					}
+					return true;
+				}
 			}
+		}
+		return false;
+	}
+
+	public bool Swap(int pos1, int pos2)
+	{
+		if(itemList == null)
+			itemList = new InventoryInfo[size];
+		if(pos1 < size && pos2 < size)
+		{
+			InventoryInfo temp = itemList[pos1];
+			itemList[pos1] = itemList[pos2];
+			itemList[pos2] = temp;
+			return true;
 		}
 		return false;
 	}

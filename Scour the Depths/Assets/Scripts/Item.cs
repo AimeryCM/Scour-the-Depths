@@ -9,7 +9,6 @@ public class Item : ScriptableObject
 	public string itemName = "New Item";
 	public Sprite icon = null;
 	public int cost = 0;
-
 }
 
 public enum ItemType {Weapon, Coin, Material, Consumable, Ability}

@@ -8,21 +8,24 @@ public class PlayerInventoryManager : MonoBehaviour
 {
     public static PlayerInventoryManager instance;
 	
-	public short hotbarSize = 4;
-	public float hotbarXOffset = 220;
-	public float hotbarYOffset = -20;
+	//public short hotbarSize = 4;
+	//public float hotbarXOffset = 220;
+	//public float hotbarYOffset = -20;
 	public Inventory inventory;
-	[SerializeField] private GameObject hotbarBox;
-	[SerializeField] private Canvas canvas;
-	private GameObject[] hotbarSlots;
-
-	//for generating the inventory UI
+	public GameObject[] hotbarBoxes;
+	public GameObject[] inventoryBoxes;
 	[SerializeField] private GameObject inventoryUI;
+	//[SerializeField] private GameObject hotbarBox;
+	[SerializeField] private Canvas canvas;
+	//private GameObject[] hotbarSlots;
+
+/*
+	//for generating the inventory UI
 	[SerializeField] private Image inventoryBackground;
 	[SerializeField] private GameObject inventoryBox;
 	public float gapSize = 10f;
 	private GameObject[] inventorySlots;
-
+*/
 	void Awake()
 	{
 		if(instance != null)
@@ -32,17 +35,33 @@ public class PlayerInventoryManager : MonoBehaviour
 
 	void Start()
 	{
-		hotbarSlots = new GameObject[hotbarSize];
-		inventorySlots = new GameObject[inventory.size];
-
+		/*
 		for(int x = 0; x < hotbarSlots.Length; x++)
 		{
 			hotbarSlots[x] = Instantiate(hotbarBox, Vector3.zero, Quaternion.identity);
 			hotbarSlots[x].GetComponent<RectTransform>().SetParent(canvas.transform);
 			hotbarSlots[x].GetComponent<RectTransform>().localPosition = new Vector3(x * ((hotbarXOffset * 2)/(hotbarSize - 1)) - hotbarXOffset, hotbarYOffset, 0);
 		}
-		GenerateInventoryUI();
+		*/
+		SetBoxIDs();
+		for(int x = inventoryBoxes.Length - 1; x + hotbarBoxes.Length >= inventory.size && x >= 0; x--)
+		{
+			inventoryBoxes[x].SetActive(false);
+		}
+		//GenerateInventoryUI();
 		inventory.ResetCoins();
+	}
+
+	private void SetBoxIDs()
+	{
+		for(int x = 0; x < hotbarBoxes.Length; x++)
+		{
+			hotbarBoxes[x].GetComponent<InventoryBoxManager>().SetID(x);
+		}
+		for(int x = hotbarBoxes.Length; x < inventoryBoxes.Length; x++)
+		{
+			inventoryBoxes[x - hotbarBoxes.Length].GetComponent<InventoryBoxManager>().SetID(x);
+		}
 	}
 
 	public void ManageCoins(int change)
@@ -61,16 +80,25 @@ public class PlayerInventoryManager : MonoBehaviour
 		int index = inventory.Add(item);
 		if(index != -1)
 		{
-			inventorySlots[index].GetComponent<HotbarManager>().UpdateIcon(item.icon);
-			if(index < hotbarSize)
+			if(index < hotbarBoxes.Length)
 			{
-				hotbarSlots[index].GetComponent<HotbarManager>().UpdateIcon(item.icon);
+				hotbarBoxes[index].GetComponent<InventoryBoxManager>().UpdateIcon(item.icon);
+			}
+			else
+			{
+				inventoryBoxes[index - hotbarBoxes.Length].GetComponent<InventoryBoxManager>().UpdateIcon(item.icon);
 			}
 			return true;
 		}
 		return false;
 	}
 
+	public bool Swap(int slot1, int slot2)
+	{
+		return inventory.Swap(slot1, slot2);
+	}
+
+/*
 	private void GenerateInventoryUI()
 	{
 		//creates the appropriate sized inventory background
@@ -96,7 +124,7 @@ public class PlayerInventoryManager : MonoBehaviour
 		}
 		inventoryUI.SetActive(false);
 	}
-
+*/
 	public void ToggleInventory()
 	{
 		Debug.Log("Toggling Inventory");
