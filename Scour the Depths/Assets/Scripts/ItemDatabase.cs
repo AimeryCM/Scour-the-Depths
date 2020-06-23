@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Item Database", menuName = "ItemDatabase")]
 public class ItemDatabase : ScriptableObject
 {
-	[SerializeField] private Item[] items;
+	[SerializeField] private Item[] items = null;
 	[SerializeField] private Dictionary<Item, int> itemToID = null;
 
 	void OnAfterDeserialize()

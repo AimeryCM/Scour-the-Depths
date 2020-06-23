@@ -1,22 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
 public class PlayerInventoryManager : MonoBehaviour
 {
-    public static PlayerInventoryManager instance;
+    public static PlayerInventoryManager instance = null;
 	
 	//public short hotbarSize = 4;
 	//public float hotbarXOffset = 220;
 	//public float hotbarYOffset = -20;
-	public Inventory inventory;
-	public GameObject[] hotbarBoxes;
-	public GameObject[] inventoryBoxes;
-	[SerializeField] private GameObject inventoryUI;
+	public Inventory inventory = null;
+	public GameObject[] hotbarBoxes = null;
+	public GameObject[] inventoryBoxes = null;
+	public TextMeshProUGUI coinsText = null;
+	[SerializeField] private GameObject inventoryUI = null;
 	//[SerializeField] private GameObject hotbarBox;
-	[SerializeField] private Canvas canvas;
 	//private GameObject[] hotbarSlots;
 
 /*
@@ -50,6 +51,7 @@ public class PlayerInventoryManager : MonoBehaviour
 		}
 		//GenerateInventoryUI();
 		inventory.ResetCoins();
+		coinsText.SetText("Coins: " + inventory.GetCoins());
 	}
 
 	private void SetBoxIDs()
@@ -67,6 +69,7 @@ public class PlayerInventoryManager : MonoBehaviour
 	public void ManageCoins(int change)
 	{
 		inventory.ManageCoins(change);
+		coinsText.SetText("Coins: " + inventory.GetCoins());
 		Debug.Log(inventory.GetCoins() + " coins in the inventory");
 	}
 

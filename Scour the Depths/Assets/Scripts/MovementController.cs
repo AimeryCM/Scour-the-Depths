@@ -5,24 +5,24 @@ using UnityEngine;
 public class MovementController : MonoBehaviour
 {
 
-	[SerializeField] private float jumpHeight;
-	[Range(0,1)] [SerializeField] private float crouchSpeed;
-	[SerializeField] private float acceleration;
-	[SerializeField] private float airAcceleration;
-	[SerializeField] private float maxSpeed;
-	[SerializeField] private short maxJumps;
-    [SerializeField] private float boxRayWidth;
-	[SerializeField] private float boxRayDistance;
-	[SerializeField] private LayerMask groundLayerMask;
-	public Animator animator;
+	[SerializeField] private float jumpHeight = 0;
+	//[Range(0,1)] [SerializeField] private float crouchSpeed = 0;
+	[SerializeField] private float acceleration = 0;
+	[SerializeField] private float airAcceleration = 0;
+	[SerializeField] private float maxSpeed = 0;
+	[SerializeField] private short maxJumps = 0;
+    [SerializeField] private float boxRayWidth = 0;
+	[SerializeField] private float boxRayDistance = 0;
+	[SerializeField] private LayerMask groundLayerMask = 0;
+	public Animator animator = null;
 	
-	private Rigidbody2D playerRigidBody;
+	private Rigidbody2D playerRigidBody = null;
 	private Vector3 velocity = Vector3.zero;
 	private bool facingRight = true;
-	private bool grounded;
-	private float jumpForce;
-	private short jumps;
-    private CircleCollider2D circleCollider;
+	private bool grounded = false;
+	private float jumpForce = 0;
+	private short jumps = 1;
+    private CircleCollider2D circleCollider = null;
 
 
     void Start()

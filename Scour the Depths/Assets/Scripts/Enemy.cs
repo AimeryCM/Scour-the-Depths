@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-	public int maxHealth;
-	public DropInfo dropInfo;
-	public float dropXFactor;
-	public float dropYFactor;
-	[SerializeField] private Transform damageTextSpawn;
-	[SerializeField] private GameObject damageTextPrefab;
-	private int currentHealth;
+	public int maxHealth = 0;
+	public DropInfo dropInfo = null;
+	public float dropXFactor = 0;
+	public float dropYFactor = 0;
+	[SerializeField] private Transform damageTextSpawn = null;
+	[SerializeField] private GameObject damageTextPrefab = null;
+	private int currentHealth = 0;
 
     void Start()
     {

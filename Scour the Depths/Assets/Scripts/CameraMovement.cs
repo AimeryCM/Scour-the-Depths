@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-	[Range (0,1)] public float cameraAcceleration;
-	public Vector3 offset;
-	public float cameraYStickyMod;
-	private Transform characterPosition;
-	private float characterBaseY;
+	[Range (0,1)] public float cameraAcceleration = 0;
+	public Vector3 offset = Vector3.zero;
+	public float cameraYStickyMod = 0;
+	private Transform characterPosition = null;
+	private float characterBaseY = 0;
 	private Vector3 velocity = Vector3.zero;
 
     void Start()

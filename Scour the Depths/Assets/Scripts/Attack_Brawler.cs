@@ -4,11 +4,11 @@ using UnityEngine.InputSystem;
 public class Attack_Brawler : MonoBehaviour
 {
 
-    public Animator animator;
-    public Transform attackPos;
-    public LayerMask enemyLayers;
-    public float attackRadius;
-    public int punchDamage;
+    public Animator animator = null;
+    public Transform attackPos = null;
+    public LayerMask enemyLayers = 0;
+    public float attackRadius = 0;
+    public int punchDamage = 0;
 
     void Start()
     {

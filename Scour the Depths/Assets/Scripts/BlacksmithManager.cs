@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class BlacksmithManager : MonoBehaviour
 {
-	public Animator animator;
+	public Animator animator = null;
+	public Inventory inventory = null;
 
 	public void OnInteract()
 	{

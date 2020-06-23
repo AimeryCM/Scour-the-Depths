@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "InformationHolders", menuName = "Monster Drop Info")]
 public class DropInfo : ScriptableObject
 {
-	[SerializeField] private List<ItemRarity> rarityInfo;
+	[SerializeField] private List<ItemRarity> rarityInfo = null;
 
 	[System.Serializable]
 	public struct QuantityRarity

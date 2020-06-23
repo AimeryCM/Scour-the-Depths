@@ -4,8 +4,7 @@ using UnityEngine.InputSystem;
 
 public class Interactable : MonoBehaviour
 {
-	[SerializeField] private CircleCollider2D circleCollider;
-	public UnityEvent onInteractEvent;
+	public UnityEvent onInteractEvent = null;
 
 	private bool playerInRange = false;
 

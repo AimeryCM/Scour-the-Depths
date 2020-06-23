@@ -3,12 +3,12 @@ using TMPro;
 
 public class DamageTextScript : MonoBehaviour
 {
-	private TextMeshPro tmpro;
-	private Color color;
+	private TextMeshPro tmpro = null;
+	private Color color = Color.white;
 	private float timeSinceCreation = 0;
-	[SerializeField] private float textSpeed;
-	[SerializeField] private float timeToFade;
-	[SerializeField] private float fadeSpeed;
+	[SerializeField] private float textSpeed = 0;
+	[SerializeField] private float timeToFade = 0;
+	[SerializeField] private float fadeSpeed = 0;
 
 	public void Setup(int damage, bool crit)
 	{

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class CharacterSelectScreen : MonoBehaviour
 {
-	public GameObject panelPrefab;
+	public GameObject panelPrefab = null;
 	public short panelCount = 3;
-	private List<GameObject> panels;
+	private List<GameObject> panels = null;
 
 	void Start()
 	{

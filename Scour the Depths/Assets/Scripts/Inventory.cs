@@ -19,9 +19,9 @@ public class Inventory : ScriptableObject
 	}
 
 	public int size = 16;
-	private int coins;
-	private InventoryInfo[] itemList;
-	public ItemDatabase database;
+	private int coins = 0;
+	private InventoryInfo[] itemList = null;
+	public ItemDatabase database = null;
 
 	public int ManageCoins(int amount)
 	{

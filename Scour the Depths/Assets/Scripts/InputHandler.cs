@@ -5,15 +5,15 @@ using UnityEngine.InputSystem;
 
 public class InputHandler : MonoBehaviour
 {
-	public static InputHandler instance;
+	public static InputHandler instance = null;
 
-	public GameObject character;
-	public InputActionMap playerActions;
-	public InputActionMap inventoryActions;
-	public InputActionMap attackActions;
+	public GameObject character = null;
+	public InputActionMap playerActions = null;
+	public InputActionMap inventoryActions = null;
+	public InputActionMap attackActions = null;
 
 	private float horizontalMove = 0f;
-	private MovementController moveControl;
+	private MovementController moveControl = null;
 
 	void Awake()
 	{

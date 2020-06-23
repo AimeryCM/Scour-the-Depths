@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ItemManager : MonoBehaviour
 {
-	public Item item;
-	protected SpriteRenderer spriteRenderer;
+	public Item item = null;
+	protected SpriteRenderer spriteRenderer = null;
 
 	void Start()
 	{
