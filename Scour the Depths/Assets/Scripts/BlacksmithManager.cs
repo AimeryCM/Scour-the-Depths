@@ -6,6 +6,12 @@ public class BlacksmithManager : MonoBehaviour
 {
 	public Animator animator = null;
 	[SerializeField] private NPCInventoryManager inventory = null;
+	public Item ironSword = null;
+
+	void Start()
+	{
+		PopulateInventory();
+	}
 
 	public void OnInteract()
 	{
@@ -16,5 +22,13 @@ public class BlacksmithManager : MonoBehaviour
 	public void OnLeave()
 	{
 		inventory.HideInventory();
+	}
+
+	public void PopulateInventory()
+	{
+		List<Inventory.InventoryInfo> items = new List<Inventory.InventoryInfo>();
+		items.Add(new Inventory.InventoryInfo(ironSword, 1));
+		Debug.Log("Populating inventory: " + items[0].ToString());
+		inventory.Setup(items);
 	}
 }

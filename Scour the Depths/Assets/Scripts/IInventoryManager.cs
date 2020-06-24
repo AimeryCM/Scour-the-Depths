@@ -17,4 +17,8 @@ public interface IInventoryManager
 	bool Swap(int slot1, int slot2);
 
 	void ToggleInventory();
+
+	void Setup(List<Inventory.InventoryInfo> items);
+
+	int GetCost(int index);
 }

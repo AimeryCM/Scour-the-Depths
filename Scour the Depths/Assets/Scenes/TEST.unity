@@ -6538,6 +6538,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 1546071985}
   inventory: {fileID: 1546071991}
+  ironSword: {fileID: 11400000, guid: f471187a0dcc91649a5a671d2c643049, type: 2}
 --- !u!114 &1546071991
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6569,6 +6570,7 @@ MonoBehaviour:
   - {fileID: 221309066}
   - {fileID: 2109908475}
   - {fileID: 203091735}
+  markup: 2
   inventoryUI: {fileID: 355070661}
 --- !u!1 &1555299556 stripped
 GameObject:

@@ -7,6 +7,7 @@ public class NPCInventoryManager : MonoBehaviour, IInventoryManager
 	public Inventory inventory = null;
 	public InventoryOwner owner = InventoryOwner.Default;
 	public GameObject[] inventoryBoxes = null;
+	public float markup = 1f;
 	[SerializeField] private GameObject inventoryUI = null;
 
 	void Start()
@@ -17,9 +18,28 @@ public class NPCInventoryManager : MonoBehaviour, IInventoryManager
 		{
 			inventoryBoxes[x].SetActive(false);
 		}
-		inventory.Setup();
 		inventory.ResetCoins();
 		inventoryUI.SetActive(false);
+	}
+
+	public void Setup(List<Inventory.InventoryInfo> items)
+	{
+		if(items == null)
+			inventory.Setup();
+		else
+			inventory.Setup(items);
+		UpdateSprites();
+	}
+
+	private void UpdateSprites()
+	{
+		for(int x = 0; x < inventory.size; x++)
+		{
+			if(inventory.GetItem(x).occupied)
+				inventoryBoxes[x].GetComponent<InventoryBoxManager>().UpdateIcon(inventory.GetItem(x).item.icon);
+			else
+				inventoryBoxes[x].GetComponent<InventoryBoxManager>().SetIconToDefault();
+		}
 	}
 
 	private void SetBoxIDs()
@@ -40,6 +60,11 @@ public class NPCInventoryManager : MonoBehaviour, IInventoryManager
 	public int GetCoins()
 	{
 		return inventory.GetCoins();
+	}
+
+	public int GetCost(int index)
+	{
+		return Mathf.FloorToInt(inventory.GetItem(index).item.cost * markup);
 	}
 
 	public bool AddToInventory(Item item)
@@ -68,6 +93,11 @@ public class NPCInventoryManager : MonoBehaviour, IInventoryManager
 		return inventory.Swap(slot1, slot2);
 	}
 
+	public float Markup()
+	{
+		return markup;
+	}
+
 	public void ToggleInventory()
 	{
 		inventoryUI.SetActive(!inventoryUI.activeSelf);
@@ -76,11 +106,17 @@ public class NPCInventoryManager : MonoBehaviour, IInventoryManager
 	public void ShowInventory()
 	{
 		inventoryUI.SetActive(true);
+		PrintInventory();
 	}
 
 	public void HideInventory()
 	{
 		inventoryUI.SetActive(false);
+	}
+
+	private void PrintInventory()
+	{
+		Debug.Log(owner + " Inventory:\n" + inventory.ToString());
 	}
 
 }

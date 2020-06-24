@@ -15,7 +15,17 @@ public class Inventory : ScriptableObject
 		{
 			item = i;
 			quantity = quant;
-			occupied = false;
+			if(quant > 0)
+				occupied = true;
+			else
+				occupied = false;
+		}
+
+		public override string ToString()
+		{
+			if(!occupied)
+				return "Unoccupied";
+			return quantity + " copies of " + item.itemName;
 		}
 	}
 
@@ -33,10 +43,17 @@ public class Inventory : ScriptableObject
 	public void Setup(List<InventoryInfo> input)
 	{
 		Setup();
-		for(int x = 0; x < input.Capacity && x < size; x++)
+		for(int x = 0; x < input.Count && x < size; x++)
 		{
 			itemList[x] = input[x];
 		}
+	}
+
+	public InventoryInfo GetItem(int pos)
+	{
+		if(pos >= 0 && pos < size)
+			return itemList[pos];
+		return new InventoryInfo(null, 0);
 	}
 
 	public int ManageCoins(int amount)
@@ -142,5 +159,15 @@ public class Inventory : ScriptableObject
 			return true;
 		}
 		return false;
+	}
+
+	public override string ToString()
+	{
+		string output = "Size: " + size + "\n";
+		for(int x = 0; x < size; x++)
+		{
+			output += x + ": " + itemList[x].ToString() + "\n";
+		}
+		return output;
 	}
 }

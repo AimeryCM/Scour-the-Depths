@@ -15,4 +15,17 @@ public class ProjectUtil
 		Inventory.InventoryInfo tempFrom2 = secondManager.Replace(secondIndex, tempFrom1);
 		firstManager.Replace(firstIndex, tempFrom2);
 	}
+
+	public static bool Sell(IInventoryManager seller, int sellIndex, IInventoryManager purchaser, int purIndex)
+	{
+		Debug.Log("Cost " + seller.GetCost(sellIndex));
+		if(purchaser.GetCoins() >= seller.GetCost(sellIndex))
+		{
+			purchaser.ManageCoins(-1 * seller.GetCost(sellIndex));
+			seller.ManageCoins(seller.GetCost(sellIndex));
+			SwapBetweenInventories(seller, sellIndex, purchaser, purIndex);
+			return true;
+		}
+		return false;
+	}
 }

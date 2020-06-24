@@ -15,3 +15,4 @@ MonoBehaviour:
   itemType: 0
   itemName: Proxy Sword
   icon: {fileID: 21300000, guid: 07b794d6ae4ef904cb545482bb75876b, type: 3}
+  cost: 10

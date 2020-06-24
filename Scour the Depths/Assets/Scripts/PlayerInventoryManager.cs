@@ -7,35 +7,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerInventoryManager : MonoBehaviour, IInventoryManager
 {
-	//public short hotbarSize = 4;
-	//public float hotbarXOffset = 220;
-	//public float hotbarYOffset = -20;
 	public Inventory inventory = null;
 	public GameObject[] hotbarBoxes = null;
 	public GameObject[] inventoryBoxes = null;
 	public TextMeshProUGUI coinsText = null;
 	[SerializeField] private GameObject inventoryUI = null;
-	//[SerializeField] private GameObject hotbarBox;
-	//private GameObject[] hotbarSlots;
-
-/*
-	//for generating the inventory UI
-	[SerializeField] private Image inventoryBackground;
-	[SerializeField] private GameObject inventoryBox;
-	public float gapSize = 10f;
-	private GameObject[] inventorySlots;
-*/
 
 	void Start()
 	{
-		/*
-		for(int x = 0; x < hotbarSlots.Length; x++)
-		{
-			hotbarSlots[x] = Instantiate(hotbarBox, Vector3.zero, Quaternion.identity);
-			hotbarSlots[x].GetComponent<RectTransform>().SetParent(canvas.transform);
-			hotbarSlots[x].GetComponent<RectTransform>().localPosition = new Vector3(x * ((hotbarXOffset * 2)/(hotbarSize - 1)) - hotbarXOffset, hotbarYOffset, 0);
-		}
-		*/
 		inventory.Setup();
 		InventoryToolbox.instance.AddGlobalComponent(InventoryOwner.Player, this);
 		SetBoxIDs();
@@ -43,10 +22,35 @@ public class PlayerInventoryManager : MonoBehaviour, IInventoryManager
 		{
 			inventoryBoxes[x].SetActive(false);
 		}
-		//GenerateInventoryUI();
 		inventory.ResetCoins();
 		coinsText.SetText("Coins: " + inventory.GetCoins());
 		InputHandler.instance.inventoryActions["Inventory"].performed += ctx => ToggleInventory();
+	}
+
+	public void Setup(List<Inventory.InventoryInfo> items)
+	{
+		if(items == null)
+			inventory.Setup();
+		else
+			inventory.Setup(items);
+		UpdateSprites();
+	}
+
+	private void UpdateSprites()
+	{
+		for(int x = 0; x < inventory.size; x++)
+		{
+			GameObject box;
+			if(x < hotbarBoxes.Length)
+				box = hotbarBoxes[x];
+			else
+				box = inventoryBoxes[x - hotbarBoxes.Length];
+			
+			if(inventory.GetItem(x).occupied)
+				box.GetComponent<InventoryBoxManager>().UpdateIcon(inventory.GetItem(x).item.icon);
+			else
+				box.GetComponent<InventoryBoxManager>().SetIconToDefault();
+		}
 	}
 
 	private void SetBoxIDs()
@@ -86,6 +90,7 @@ public class PlayerInventoryManager : MonoBehaviour, IInventoryManager
 			{
 				inventoryBoxes[index - hotbarBoxes.Length].GetComponent<InventoryBoxManager>().UpdateIcon(item.icon);
 			}
+			Debug.Log("Player Inventory:\n" + inventory.ToString());
 			return true;
 		}
 		return false;
@@ -103,8 +108,36 @@ public class PlayerInventoryManager : MonoBehaviour, IInventoryManager
 
 	public bool Swap(int slot1, int slot2)
 	{
-		return inventory.Swap(slot1, slot2);
+		bool result = inventory.Swap(slot1, slot2);
+		Debug.Log("Player Inventory:\n" + inventory.ToString());
+		return result;
 	}
+
+	public int GetCost(int index)
+	{
+		Item item = inventory.GetItem(index).item;
+		if(item != null)
+			return item.cost;
+		Debug.LogWarning("Getting cost of a null item");
+		return 0;
+	}
+
+	public void ToggleInventory()
+	{
+		Debug.Log("Toggling Inventory");
+		inventoryUI.SetActive(!inventoryUI.activeSelf);
+	}
+}
+
+
+		/*
+		for(int x = 0; x < hotbarSlots.Length; x++)
+		{
+			hotbarSlots[x] = Instantiate(hotbarBox, Vector3.zero, Quaternion.identity);
+			hotbarSlots[x].GetComponent<RectTransform>().SetParent(canvas.transform);
+			hotbarSlots[x].GetComponent<RectTransform>().localPosition = new Vector3(x * ((hotbarXOffset * 2)/(hotbarSize - 1)) - hotbarXOffset, hotbarYOffset, 0);
+		}
+		*/
 
 /*
 	private void GenerateInventoryUI()
@@ -133,9 +166,3 @@ public class PlayerInventoryManager : MonoBehaviour, IInventoryManager
 		inventoryUI.SetActive(false);
 	}
 */
-	public void ToggleInventory()
-	{
-		Debug.Log("Toggling Inventory");
-		inventoryUI.SetActive(!inventoryUI.activeSelf);
-	}
-}
