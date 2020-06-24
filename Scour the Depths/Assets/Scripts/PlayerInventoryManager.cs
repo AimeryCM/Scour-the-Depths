@@ -5,10 +5,8 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
-public class PlayerInventoryManager : MonoBehaviour
+public class PlayerInventoryManager : MonoBehaviour, IInventoryManager
 {
-    public static PlayerInventoryManager instance = null;
-	
 	//public short hotbarSize = 4;
 	//public float hotbarXOffset = 220;
 	//public float hotbarYOffset = -20;
@@ -27,12 +25,6 @@ public class PlayerInventoryManager : MonoBehaviour
 	public float gapSize = 10f;
 	private GameObject[] inventorySlots;
 */
-	void Awake()
-	{
-		if(instance != null)
-			Debug.LogWarning("More than one Inventory instance detected");
-		instance = this;
-	}
 
 	void Start()
 	{
@@ -44,6 +36,8 @@ public class PlayerInventoryManager : MonoBehaviour
 			hotbarSlots[x].GetComponent<RectTransform>().localPosition = new Vector3(x * ((hotbarXOffset * 2)/(hotbarSize - 1)) - hotbarXOffset, hotbarYOffset, 0);
 		}
 		*/
+		inventory.Setup();
+		InventoryToolbox.instance.AddGlobalComponent(InventoryOwner.Player, this);
 		SetBoxIDs();
 		for(int x = inventoryBoxes.Length - 1; x + hotbarBoxes.Length >= inventory.size && x >= 0; x--)
 		{
@@ -52,6 +46,7 @@ public class PlayerInventoryManager : MonoBehaviour
 		//GenerateInventoryUI();
 		inventory.ResetCoins();
 		coinsText.SetText("Coins: " + inventory.GetCoins());
+		InputHandler.instance.inventoryActions["Inventory"].performed += ctx => ToggleInventory();
 	}
 
 	private void SetBoxIDs()
@@ -94,6 +89,16 @@ public class PlayerInventoryManager : MonoBehaviour
 			return true;
 		}
 		return false;
+	}
+
+	public Inventory.InventoryInfo Remove(int slot)
+	{
+		return inventory.Remove(slot);
+	}
+
+	public Inventory.InventoryInfo Replace(int slot, Inventory.InventoryInfo info)
+	{
+		return inventory.Replace(slot, info);
 	}
 
 	public bool Swap(int slot1, int slot2)

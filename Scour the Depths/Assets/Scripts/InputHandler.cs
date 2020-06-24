@@ -25,7 +25,6 @@ public class InputHandler : MonoBehaviour
 	void Start()
 	{
 		moveControl = character.GetComponent<MovementController>();
-		inventoryActions["Inventory"].performed += ctx => PlayerInventoryManager.instance.ToggleInventory();
 		playerActions["Jump"].performed += ctx => moveControl.Jump();
 	}
 

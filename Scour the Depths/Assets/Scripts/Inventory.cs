@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory")]
 public class Inventory : ScriptableObject
 {
+	[System.Serializable]
 	public struct InventoryInfo
 	{
 		public Item item;
@@ -19,9 +20,24 @@ public class Inventory : ScriptableObject
 	}
 
 	public int size = 16;
+	public int startingCoins = 0;
 	private int coins = 0;
-	private InventoryInfo[] itemList = null;
 	public ItemDatabase database = null;
+	private InventoryInfo[] itemList = null;
+
+	public void Setup()
+	{
+		itemList = new InventoryInfo[size];
+	}
+
+	public void Setup(List<InventoryInfo> input)
+	{
+		Setup();
+		for(int x = 0; x < input.Capacity && x < size; x++)
+		{
+			itemList[x] = input[x];
+		}
+	}
 
 	public int ManageCoins(int amount)
 	{
@@ -36,7 +52,14 @@ public class Inventory : ScriptableObject
 
 	public void ResetCoins()
 	{
-		coins = 0;
+		coins = startingCoins;
+	}
+
+	public InventoryInfo Replace(int index, InventoryInfo otherInfo)
+	{
+		InventoryInfo result = itemList[index];
+		itemList[index] = otherInfo;
+		return result;
 	}
 
 	//adds 1 of the item to the inventory
@@ -47,9 +70,10 @@ public class Inventory : ScriptableObject
 
 	public int Add(Item item, int amount)
 	{
-		if(itemList == null)
-			itemList = new InventoryInfo[size];
+		if(itemList == null || itemList.Length != size)
+			Setup();
 		int openSpot = -1;
+		Debug.Log("itemList[].Length: " + itemList.Length + " size: " + size);
 		for(int x = 0; x < size; x++)
 		{
 			if(itemList[x].occupied)
@@ -99,10 +123,17 @@ public class Inventory : ScriptableObject
 		return false;
 	}
 
+	public InventoryInfo Remove(int slot)
+	{
+		InventoryInfo temp = itemList[slot];
+		itemList[slot] = new InventoryInfo(null, 0);
+		return temp;
+	}
+
 	public bool Swap(int pos1, int pos2)
 	{
 		if(itemList == null)
-			itemList = new InventoryInfo[size];
+			Setup();
 		if(pos1 < size && pos2 < size)
 		{
 			InventoryInfo temp = itemList[pos1];

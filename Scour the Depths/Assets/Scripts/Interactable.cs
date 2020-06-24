@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 public class Interactable : MonoBehaviour
 {
 	public UnityEvent onInteractEvent = null;
+	public UnityEvent onLeaveEvent = null;
 
 	private bool playerInRange = false;
 
@@ -26,6 +27,7 @@ public class Interactable : MonoBehaviour
 		if(collision.gameObject.CompareTag("Player"))
 		{
 			playerInRange = false;
+			onLeaveEvent.Invoke();
 		}
 	}
 

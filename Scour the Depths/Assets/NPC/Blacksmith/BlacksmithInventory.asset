@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: BlacksmithInventory
   m_EditorClassIdentifier: 
   size: 16
+  startingCoins: 20
+  database: {fileID: 11400000, guid: f0d4f6edb105d6741ba36a7a3ef9a214, type: 2}
