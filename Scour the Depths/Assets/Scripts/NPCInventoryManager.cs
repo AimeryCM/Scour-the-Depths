@@ -64,7 +64,11 @@ public class NPCInventoryManager : MonoBehaviour, IInventoryManager
 
 	public int GetCost(int index)
 	{
-		return Mathf.FloorToInt(inventory.GetItem(index).item.cost * markup);
+		Inventory.InventoryInfo itemInfo = inventory.GetItem(index);
+		if(itemInfo.occupied)
+			return Mathf.FloorToInt((itemInfo.item.cost * itemInfo.quantity) * markup);
+		Debug.LogWarning("Getting cost of an empty item slot");
+		return 0;
 	}
 
 	public bool AddToInventory(Item item)

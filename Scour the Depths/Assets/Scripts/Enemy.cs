@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
 	public DropInfo dropInfo = null;
 	public float dropXFactor = 0;
 	public float dropYFactor = 0;
+	public Animator animator = null;
 	[SerializeField] private Transform damageTextSpawn = null;
 	[SerializeField] private GameObject damageTextPrefab = null;
 	private int currentHealth = 0;
@@ -16,6 +17,10 @@ public class Enemy : MonoBehaviour
     {
         currentHealth = maxHealth;
     }
+
+	public void Attack()
+	{
+	}
 
     public void Damage(int amount, bool crit)
     {

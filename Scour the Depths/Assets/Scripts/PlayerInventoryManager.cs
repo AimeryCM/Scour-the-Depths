@@ -115,10 +115,10 @@ public class PlayerInventoryManager : MonoBehaviour, IInventoryManager
 
 	public int GetCost(int index)
 	{
-		Item item = inventory.GetItem(index).item;
-		if(item != null)
-			return item.cost;
-		Debug.LogWarning("Getting cost of a null item");
+		Inventory.InventoryInfo itemInfo = inventory.GetItem(index);
+		if(itemInfo.occupied)
+			return itemInfo.item.cost * itemInfo.quantity;
+		Debug.LogWarning("Getting cost of an empty item slot");
 		return 0;
 	}
 
