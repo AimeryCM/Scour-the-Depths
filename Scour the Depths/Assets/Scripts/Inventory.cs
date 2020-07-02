@@ -35,7 +35,7 @@ public class Inventory : ScriptableObject
 	public ItemDatabase database = null;
 	private InventoryInfo[] itemList = null;
 
-	public void Setup()
+	public virtual void Setup()
 	{
 		itemList = new InventoryInfo[size];
 	}

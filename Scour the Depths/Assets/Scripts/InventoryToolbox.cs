@@ -41,4 +41,4 @@ public class InventoryToolbox : MonoBehaviour
 	}
 }
 
-public enum InventoryOwner {Player, Blacksmith, Default}
+public enum InventoryOwner {Player, Blacksmith, PlayerWeaponSlot, PlayerTrinketSlot, Default}

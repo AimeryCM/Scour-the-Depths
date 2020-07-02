@@ -10,6 +10,8 @@ public class PlayerInventoryManager : MonoBehaviour, IInventoryManager
 	public Inventory inventory = null;
 	public GameObject[] hotbarBoxes = null;
 	public GameObject[] inventoryBoxes = null;
+	public GameObject[] equipmentBoxes = null;
+	public GameObject[] trinketBoxes = null;
 	public TextMeshProUGUI coinsText = null;
 	[SerializeField] private GameObject inventoryUI = null;
 

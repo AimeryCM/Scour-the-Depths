@@ -35,23 +35,10 @@ public class InventoryBoxManager : MonoBehaviour, IDropHandler
 					eventData.pointerDrag.GetComponent<Image>().sprite = temp;
 					InventoryToolbox.instance.GetGlobalComponent(owner).Swap(slotID, otherBox.GetID());
 				}
-				if(owner == InventoryOwner.Blacksmith && otherBox.owner == InventoryOwner.Player)
+				if((owner == InventoryOwner.Blacksmith && otherBox.owner == InventoryOwner.Player) || (owner == InventoryOwner.Player && otherBox.owner == InventoryOwner.Blacksmith))
 				{
-					Debug.Log("Dropping from player to blacksmith");
 					if(ProjectUtil.Sell(InventoryToolbox.instance.GetGlobalComponent(otherBox.owner), otherBox.GetID(), InventoryToolbox.instance.GetGlobalComponent(owner), slotID))
 					{
-						Debug.Log("Sold!");
-						Sprite temp = iconSpot.sprite;
-						UpdateIcon(eventData.pointerDrag.GetComponent<Image>().sprite);
-						eventData.pointerDrag.GetComponent<Image>().sprite = temp;
-					}
-				}
-				if(owner == InventoryOwner.Player && otherBox.owner == InventoryOwner.Blacksmith)
-				{
-					Debug.Log("Dropping from Blacksmith into player");
-					if(ProjectUtil.Sell(InventoryToolbox.instance.GetGlobalComponent(otherBox.owner), otherBox.GetID(), InventoryToolbox.instance.GetGlobalComponent(owner), slotID))
-					{
-						Debug.Log("Sold!");
 						Sprite temp = iconSpot.sprite;
 						UpdateIcon(eventData.pointerDrag.GetComponent<Image>().sprite);
 						eventData.pointerDrag.GetComponent<Image>().sprite = temp;

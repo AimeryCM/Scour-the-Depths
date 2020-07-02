@@ -11,4 +11,4 @@ public class Item : ScriptableObject
 	public int cost = 0;
 }
 
-public enum ItemType {Weapon, Coin, Material, Consumable, Ability}
+public enum ItemType {Weapon, Coin, Material, Consumable, Trinket}

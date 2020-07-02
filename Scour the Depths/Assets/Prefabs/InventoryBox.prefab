@@ -67,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 660181376bc3fef429d5941d12e5ec7c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9a7d321d4162e0c44b23bcd7336120bb, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -187,12 +187,12 @@ PrefabInstance:
     - target: {fileID: 1470188022110670608, guid: 492485bbbc6f7cf4990311d8de30707c,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 7
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 1470188022110670608, guid: 492485bbbc6f7cf4990311d8de30707c,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 7
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 1470188022110670608, guid: 492485bbbc6f7cf4990311d8de30707c,
         type: 3}
@@ -227,12 +227,12 @@ PrefabInstance:
     - target: {fileID: 1470188022110670608, guid: 492485bbbc6f7cf4990311d8de30707c,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 9
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1470188022110670608, guid: 492485bbbc6f7cf4990311d8de30707c,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 9
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8067464705761733056, guid: 492485bbbc6f7cf4990311d8de30707c,
         type: 3}
