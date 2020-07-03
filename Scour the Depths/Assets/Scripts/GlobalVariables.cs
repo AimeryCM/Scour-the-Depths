@@ -6,6 +6,9 @@ public static class GlobalVariables
 {
 	public static int trinketSlots = 4;
 	public static int weaponSlots = 2;
+	public static int hotbarSlots = 4;
+	public static int playerInventorySlots = 16;
+	public static int totalPlayerInventorySlots = trinketSlots + weaponSlots + hotbarSlots + playerInventorySlots;
 	public static int visibleTraitCount = 5;
 	public static int healthPerUpgrade = 1;
 	public static int attackPerUpgrade = 1;

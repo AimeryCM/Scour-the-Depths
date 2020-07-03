@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerInventoryManager : MonoBehaviour, IInventoryManager
 {
-	public Inventory inventory = null;
+	public PlayerInventory inventory = null;
 	public GameObject[] hotbarBoxes = null;
 	public GameObject[] inventoryBoxes = null;
 	public GameObject[] equipmentBoxes = null;
@@ -57,13 +57,23 @@ public class PlayerInventoryManager : MonoBehaviour, IInventoryManager
 
 	private void SetBoxIDs()
 	{
-		for(int x = 0; x < hotbarBoxes.Length; x++)
+		for(int x = 0; x < GlobalVariables.totalPlayerInventorySlots; x++)
 		{
-			hotbarBoxes[x].GetComponent<InventoryBoxManager>().SetID(x);
-		}
-		for(int x = hotbarBoxes.Length; x < inventoryBoxes.Length; x++)
-		{
-			inventoryBoxes[x - hotbarBoxes.Length].GetComponent<InventoryBoxManager>().SetID(x);
+			if(x < GlobalVariables.hotbarSlots)
+			{
+				hotbarBoxes[x].GetComponent<InventoryBoxManager>().SetID(x);
+			}
+			else if(x < GlobalVariables.hotbarSlots + GlobalVariables.playerInventorySlots)
+			{
+				inventoryBoxes[x - GlobalVariables.hotbarSlots].GetComponent<InventoryBoxManager>().SetID(x);
+			}
+			else if(x < GlobalVariables.hotbarSlots + GlobalVariables.playerInventorySlots + GlobalVariables.weaponSlots)
+			{
+				equipmentBoxes[x - GlobalVariables.hotbarSlots - GlobalVariables.playerInventorySlots].GetComponent<InventoryBoxManager>().SetID(x);
+			}
+			else{
+				trinketBoxes[x - GlobalVariables.hotbarSlots - GlobalVariables.playerInventorySlots - GlobalVariables.weaponSlots].GetComponent<InventoryBoxManager>().SetID(x);
+			}
 		}
 	}
 

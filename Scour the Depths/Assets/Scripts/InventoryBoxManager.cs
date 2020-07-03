@@ -30,10 +30,12 @@ public class InventoryBoxManager : MonoBehaviour, IDropHandler
 				InventoryBoxManager otherBox = eventData.pointerDrag.GetComponentInParent<InventoryBoxManager>();
 				if(owner == InventoryOwner.Player && otherBox.owner == InventoryOwner.Player)
 				{
-					Sprite temp = iconSpot.sprite;
-					UpdateIcon(eventData.pointerDrag.GetComponent<Image>().sprite);
-					eventData.pointerDrag.GetComponent<Image>().sprite = temp;
-					InventoryToolbox.instance.GetGlobalComponent(owner).Swap(slotID, otherBox.GetID());
+					if(InventoryToolbox.instance.GetGlobalComponent(owner).Swap(slotID, otherBox.GetID()))
+					{
+						Sprite temp = iconSpot.sprite;
+						UpdateIcon(eventData.pointerDrag.GetComponent<Image>().sprite);
+						eventData.pointerDrag.GetComponent<Image>().sprite = temp;
+					}
 				}
 				if((owner == InventoryOwner.Blacksmith && otherBox.owner == InventoryOwner.Player) || (owner == InventoryOwner.Player && otherBox.owner == InventoryOwner.Blacksmith))
 				{

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory")]
+[CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory/Default Inventory")]
 public class Inventory : ScriptableObject
 {
 	[System.Serializable]
@@ -33,7 +33,7 @@ public class Inventory : ScriptableObject
 	public int startingCoins = 0;
 	private int coins = 0;
 	public ItemDatabase database = null;
-	private InventoryInfo[] itemList = null;
+	protected InventoryInfo[] itemList = null;
 
 	public virtual void Setup()
 	{
@@ -49,7 +49,7 @@ public class Inventory : ScriptableObject
 		}
 	}
 
-	public InventoryInfo GetItem(int pos)
+	public virtual InventoryInfo GetItem(int pos)
 	{
 		if(pos >= 0 && pos < size)
 			return itemList[pos];
@@ -72,7 +72,7 @@ public class Inventory : ScriptableObject
 		coins = startingCoins;
 	}
 
-	public InventoryInfo Replace(int index, InventoryInfo otherInfo)
+	public virtual InventoryInfo Replace(int index, InventoryInfo otherInfo)
 	{
 		InventoryInfo result = itemList[index];
 		itemList[index] = otherInfo;
@@ -140,14 +140,16 @@ public class Inventory : ScriptableObject
 		return false;
 	}
 
-	public InventoryInfo Remove(int slot)
+	public virtual InventoryInfo Remove(int slot)
 	{
+		if(slot < 0 || slot >= size)
+			return new InventoryInfo(null, 0);
 		InventoryInfo temp = itemList[slot];
 		itemList[slot] = new InventoryInfo(null, 0);
 		return temp;
 	}
 
-	public bool Swap(int pos1, int pos2)
+	public virtual bool Swap(int pos1, int pos2)
 	{
 		if(itemList == null)
 			Setup();

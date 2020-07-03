@@ -21,7 +21,7 @@ MonoBehaviour:
       rarity: 0.5
     - quantity: 3
       rarity: 0.25
-  - item: {fileID: 3828533364415722165, guid: c58b6289459695147a1d2baca40d7097, type: 3}
+  - item: {fileID: 2770938650853253633, guid: 9bf93c2db6e7472478a9e7ef91587fef, type: 3}
     rarities:
     - quantity: 1
       rarity: 1
