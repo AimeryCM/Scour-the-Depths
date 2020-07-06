@@ -28,4 +28,25 @@ public class ProjectUtil
 		}
 		return false;
 	}
+
+	public static bool IsEquipmentSlot(int slot)
+	{
+		if(slot >= GlobalVariables.playerInventorySlots + GlobalVariables.hotbarSlots && slot < GlobalVariables.totalPlayerInventorySlots)
+			return true;
+		return false;
+	}
+
+	public static bool IsWeaponSlot(int slot)
+	{
+		if(slot >= GlobalVariables.playerInventorySlots + GlobalVariables.hotbarSlots && slot < GlobalVariables.playerInventorySlots + GlobalVariables.hotbarSlots + GlobalVariables.weaponSlots)
+			return true;
+		return false;
+	}
+
+	public static bool IsTrinketSlot(int slot)
+	{
+		if(slot >= GlobalVariables.playerInventorySlots + GlobalVariables.hotbarSlots + GlobalVariables.weaponSlots && slot < GlobalVariables.totalPlayerInventorySlots)
+			return true;
+		return false;
+	}
 }

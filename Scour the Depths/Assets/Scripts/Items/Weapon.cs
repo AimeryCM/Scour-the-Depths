@@ -24,6 +24,8 @@ public class Weapon : Item
 		public enum OvertimeType {Fire, Ice, Acid, Default}
 	}
 
+	public GameObject weaponPrefab = null;
+
 	public WeaponType weaponType = WeaponType.Default;
 	public DamageType damageType = DamageType.Physical;
 	public float damage = 1f;

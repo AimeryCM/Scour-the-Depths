@@ -6,5 +6,6 @@ using UnityEngine.Events;
 [CreateAssetMenu(fileName = "New Trinket", menuName = "Item/Trinket")]
 public class Trinket : Item
 {
-	public AbilityManager.Ability ability = AbilityManager.Ability.Default;
+	public AbilityInfo abilityInfo = new AbilityInfo(Ability.Default, 0f);
+	public List<StatModifier> modifiers = null;
 }

@@ -7,6 +7,7 @@ public class BlacksmithManager : MonoBehaviour
 	public Animator animator = null;
 	[SerializeField] private NPCInventoryManager inventory = null;
 	public Item ironSword = null;
+	public Trinket cloak = null;
 
 	void Start()
 	{
@@ -28,6 +29,7 @@ public class BlacksmithManager : MonoBehaviour
 	{
 		List<Inventory.InventoryInfo> items = new List<Inventory.InventoryInfo>();
 		items.Add(new Inventory.InventoryInfo(ironSword, 1));
+		items.Add(new Inventory.InventoryInfo(cloak, 1));
 		Debug.Log("Populating inventory: " + items[0].ToString());
 		inventory.Setup(items);
 	}

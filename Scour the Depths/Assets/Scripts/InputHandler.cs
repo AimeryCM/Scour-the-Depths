@@ -11,6 +11,7 @@ public class InputHandler : MonoBehaviour
 	public InputActionMap playerActions = null;
 	public InputActionMap inventoryActions = null;
 	public InputActionMap attackActions = null;
+	public InputActionMap abilityActions = null;
 
 	private float horizontalMove = 0f;
 	private MovementController moveControl = null;
@@ -43,6 +44,7 @@ public class InputHandler : MonoBehaviour
 		playerActions.Enable();
 		inventoryActions.Enable();
 		attackActions.Enable();
+		abilityActions.Enable();
 	}
 
 	void OnDisable()
@@ -50,6 +52,7 @@ public class InputHandler : MonoBehaviour
 		playerActions.Disable();
 		inventoryActions.Disable();
 		attackActions.Disable();
+		abilityActions.Disable();
 	}
 	
 }
