@@ -1,49 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerManager : MonoBehaviour
 {
-	public struct PlayerStats
-	{
-		public CharacterClass charClass;
-		public Item[] equippedItems;
-		public LinkedList<Item> traits;
-		public int[] upgrades;
-
-		public enum UpgradeIndex
-		{
-			Health,
-			AttackPower,
-			MagicPower,
-			Resistance,
-			Movespeed
-		}
-
-		public PlayerStats(CharacterClass character, Item[] items, LinkedList<Item> traitList, int[] ups)
-		{
-			charClass = character;
-			equippedItems = new Item[GlobalVariables.trinketSlots + GlobalVariables.weaponSlots];
-			if(items.Length > 6)
-				Debug.LogWarning("Attempting to make a PlayerStats struct with more than 6 equipped items");
-			for(int x = 0; x < equippedItems.Length && x < items.Length; x++)
-			{
-				if(x < 2 && items[x].itemType == ItemType.Weapon)
-					equippedItems[x] = items[x];
-				if(x >= 2 && items[x].itemType == ItemType.Trinket)
-					equippedItems[x] = items[x];
-			}
-			traits = new LinkedList<Item>();
-			foreach(Item trait in traitList)
-			{
-				traits.AddLast(trait);
-			}
-			upgrades = new int[GlobalVariables.visibleTraitCount];
-			System.Array.Copy(ups, upgrades, upgrades.Length);
-		}
-	}
-
 	public HealthBar healthBar = null;
+	public TextMeshProUGUI[] statText = null;
 	private CharacterClass charClass = null;
 	private IntStat maxHealth = null;
 	private int currentHealth = 0;
@@ -106,6 +69,16 @@ public class PlayerManager : MonoBehaviour
 				ApplyModifier(statMod.stat, statMod.percent, statMod.amount);
 			}
 		}
+		
+		UpdateStatText();
+	}
+
+	public void UpdateStatText()
+	{
+		statText[0].text = attackPower.GetStat().ToString();
+		statText[1].text = magicPower.GetStat().ToString();
+		statText[2].text = Mathf.FloorToInt(resistance.GetStat() * 100).ToString() + "%";
+		statText[3].text = moveSpeed.GetStat().ToString();
 	}
 
 	public void ApplyModifier(CharacterStat stat, float mod, int quant)

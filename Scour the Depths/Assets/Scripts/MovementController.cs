@@ -5,11 +5,11 @@ using UnityEngine;
 public class MovementController : MonoBehaviour
 {
 
-	[SerializeField] private float jumpHeight = 0;
+	[SerializeField] private int jumpHeight = 0;
 	//[Range(0,1)] [SerializeField] private float crouchSpeed = 0;
 	[SerializeField] private float acceleration = 0;
 	[SerializeField] private float airAcceleration = 0;
-	[SerializeField] private float maxSpeed = 0;
+	[SerializeField] private int maxSpeed = 0;
 	[SerializeField] private short maxJumps = 0;
     [SerializeField] private float boxRayWidth = 0;
 	[SerializeField] private float boxRayDistance = 0;
@@ -21,8 +21,9 @@ public class MovementController : MonoBehaviour
 	private bool facingRight = true;
 	private bool grounded = false;
 	private float jumpForce = 0;
-	private short jumps = 1;
+	private short jumps = 0;
     private CircleCollider2D circleCollider = null;
+	private float horizontalMove = 0f;
 
 
     void Start()
@@ -30,13 +31,22 @@ public class MovementController : MonoBehaviour
         playerRigidBody = GetComponent<Rigidbody2D>();
         circleCollider = GetComponent<CircleCollider2D>();
 		jumpForce = CalculateJumpForce(Physics2D.gravity.magnitude, jumpHeight);
+		InputHandler.instance.playerActions["Jump"].performed += ctx => Jump();
     }
+
+	void Update()
+	{
+		horizontalMove = InputHandler.instance.playerActions["Horizontal"].ReadValue<float>();
+	}
 
 	private void FixedUpdate()
 	{
-		animator.SetBool("Grounded", grounded = IsGrounded());
-		animator.SetFloat("XSpeed", Mathf.Abs(playerRigidBody.velocity.x));
-		animator.SetFloat("YSpeed", playerRigidBody.velocity.y);
+		grounded = IsGrounded();
+		//Debug.Log(grounded);
+		//animator.SetBool("Grounded", grounded = IsGrounded());
+		//animator.SetFloat("XSpeed", Mathf.Abs(playerRigidBody.velocity.x));
+		//animator.SetFloat("YSpeed", playerRigidBody.velocity.y);
+		Move(horizontalMove * Time.fixedDeltaTime);
 	}
 
 	public void Move(float move)
@@ -61,7 +71,7 @@ public class MovementController : MonoBehaviour
 			jumps = 0;
 		if(jumps < maxJumps)
 		{
-            animator.SetTrigger("Jump");
+            //animator.SetTrigger("Jump");
 			playerRigidBody.velocity = new Vector2(playerRigidBody.velocity.x, 0);
 			playerRigidBody.AddForce(Vector2.up * jumpForce * playerRigidBody.mass, ForceMode2D.Impulse);
 			jumps++;

@@ -22,6 +22,8 @@ public enum Ability{Default, Invisibility, Summon}
 
 public enum CharacterStat {Health, Attack, Magic, Resistance, Move, KnockbackAmplification, KnockbackResistance, JumpHeight, DoubleJumps, DashCooldown, DodgeChance}
 
+public enum CharClass {Nerd, Default}
+
 [System.Serializable]
 public struct StatModifier
 {
@@ -56,5 +58,44 @@ public struct AbilityInfo
 		type = name;
 		duration = length;
 		summon = null;
+	}
+}
+
+public struct PlayerStats
+{
+	public CharacterClass charClass;
+	public Item[] equippedItems;
+	public LinkedList<Item> traits;
+	public int[] upgrades;
+	
+	public enum UpgradeIndex
+	{
+		Health,
+		AttackPower,
+		MagicPower,
+		Resistance,
+		Movespeed
+	}
+	
+	public PlayerStats(CharacterClass character, Item[] items, LinkedList<Item> traitList, int[] ups)
+	{
+		charClass = character;
+		equippedItems = new Item[GlobalVariables.trinketSlots + GlobalVariables.weaponSlots];
+		if(items.Length > 6)
+			Debug.LogWarning("Attempting to make a PlayerStats struct with more than 6 equipped items");
+		for(int x = 0; x < equippedItems.Length && x < items.Length; x++)
+		{
+			if(x < 2 && items[x].itemType == ItemType.Weapon)
+				equippedItems[x] = items[x];
+			if(x >= 2 && items[x].itemType == ItemType.Trinket)
+				equippedItems[x] = items[x];
+		}
+		traits = new LinkedList<Item>();
+		foreach(Item trait in traitList)
+		{
+			traits.AddLast(trait);
+		}
+		upgrades = new int[GlobalVariables.visibleTraitCount];
+		System.Array.Copy(ups, upgrades, upgrades.Length);
 	}
 }

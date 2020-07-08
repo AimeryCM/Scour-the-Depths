@@ -6,6 +6,7 @@ using UnityEngine;
 public class CharacterClass : ScriptableObject
 {
 	//displayed
+	public CharClass charClass;
 	public int maxHealth = 0;
 	public int attackPower = 0;
 	public int magicPower = 0;
