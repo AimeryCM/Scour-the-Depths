@@ -13,7 +13,9 @@ public class PlayerInventoryManager : MonoBehaviour, IInventoryManager
 	public GameObject[] equipmentBoxes = null;
 	public GameObject[] trinketBoxes = null;
 	public TextMeshProUGUI coinsText = null;
+	private GameObject[] weaponObjects = null;
 	[SerializeField] private GameObject inventoryUI = null;
+
 
 	void Start()
 	{
@@ -35,6 +37,7 @@ public class PlayerInventoryManager : MonoBehaviour, IInventoryManager
 			inventory.Setup();
 		else
 			inventory.Setup(items);
+		UpdateWeapons();
 		UpdateSprites();
 	}
 
@@ -52,6 +55,49 @@ public class PlayerInventoryManager : MonoBehaviour, IInventoryManager
 				box.GetComponent<InventoryBoxManager>().UpdateIcon(inventory.GetItem(x).item.icon);
 			else
 				box.GetComponent<InventoryBoxManager>().SetIconToDefault();
+		}
+	}
+
+	private void UpdateWeapons()
+	{
+		if(weaponObjects == null)
+			weaponObjects = new GameObject[GlobalVariables.weaponSlots];
+		
+		for(int x = 0; x < weaponObjects.Length; x++)
+		{
+			UpdateWeapons(x);
+		}
+	}
+
+	private void UpdateWeapons(int slot)
+	{
+		if(weaponObjects == null)
+			weaponObjects = new GameObject[GlobalVariables.weaponSlots];
+
+		if(slot >=0 && slot < weaponObjects.Length)
+		{
+			Weapon temp = inventory.GetWeapon(slot);
+			if(weaponObjects[slot] == null)
+			{
+				if(temp != null)
+				{
+					weaponObjects[slot] = Instantiate(temp.weaponPrefab, Vector3.zero, Quaternion.identity);
+					weaponObjects[slot].transform.SetParent(GameObject.FindGameObjectsWithTag("Player")[0].transform);
+					weaponObjects[slot].transform.localPosition = Vector3.zero;
+				}
+			}
+			else if(temp == null)
+			{
+				Destroy(weaponObjects[slot]);
+				weaponObjects[slot] = null;
+			}
+			else if(!ProjectUtil.ItemsEqual(temp, weaponObjects[slot].GetComponent<ItemPrefabInfo>().parentItem, inventory.database))
+			{
+				Destroy(weaponObjects[slot]);
+				weaponObjects[slot] = Instantiate(temp.weaponPrefab, Vector3.zero, Quaternion.identity);
+				weaponObjects[slot].transform.SetParent(GameObject.FindGameObjectsWithTag("Player")[0].transform);
+				weaponObjects[slot].transform.localPosition = Vector3.zero;
+			}
 		}
 	}
 
@@ -102,7 +148,6 @@ public class PlayerInventoryManager : MonoBehaviour, IInventoryManager
 			{
 				inventoryBoxes[index - hotbarBoxes.Length].GetComponent<InventoryBoxManager>().UpdateIcon(item.icon);
 			}
-			Debug.Log("Player Inventory:\n" + inventory.ToString());
 			return true;
 		}
 		return false;
@@ -110,18 +155,25 @@ public class PlayerInventoryManager : MonoBehaviour, IInventoryManager
 
 	public Inventory.InventoryInfo Remove(int slot)
 	{
-		return inventory.Remove(slot);
+		Inventory.InventoryInfo result = inventory.Remove(slot);
+		if(ProjectUtil.IsEquipmentSlot(slot))
+			UpdateWeapons(slot - inventory.size);
+		return result;
 	}
 
 	public Inventory.InventoryInfo Replace(int slot, Inventory.InventoryInfo info)
 	{
-		return inventory.Replace(slot, info);
+		Inventory.InventoryInfo result = inventory.Replace(slot, info);
+		if(ProjectUtil.IsEquipmentSlot(slot))
+			UpdateWeapons(slot - inventory.size);
+		return result;
 	}
 
 	public bool Swap(int slot1, int slot2)
 	{
 		bool result = inventory.Swap(slot1, slot2);
-		Debug.Log("Player Inventory:\n" + inventory.ToString());
+		if(result && (ProjectUtil.IsEquipmentSlot(slot1) || ProjectUtil.IsEquipmentSlot(slot2)))
+			UpdateWeapons();
 		return result;
 	}
 
@@ -137,7 +189,20 @@ public class PlayerInventoryManager : MonoBehaviour, IInventoryManager
 	public void ToggleInventory()
 	{
 		Debug.Log("Toggling Inventory");
+		Debug.Log("Player Inventory:\n" + inventory.ToString());
 		inventoryUI.SetActive(!inventoryUI.activeSelf);
+	}
+
+	public GameObject GetWeaponObject(int slot)
+	{
+		if(weaponObjects == null)
+			weaponObjects = new GameObject[GlobalVariables.weaponSlots];
+
+		if(slot < 0 || slot >= weaponObjects.Length)
+		{
+			return null;
+		}
+		return weaponObjects[slot];
 	}
 }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Class", menuName = "CharacterClass")]
-public class CharacterClass : ScriptableObject
+public class CharacterClassStats : ScriptableObject
 {
 	//displayed
 	public CharClass charClass;

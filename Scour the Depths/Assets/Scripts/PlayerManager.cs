@@ -7,7 +7,7 @@ public class PlayerManager : MonoBehaviour
 {
 	public HealthBar healthBar = null;
 	public TextMeshProUGUI[] statText = null;
-	private CharacterClass charClass = null;
+	private CharacterClassStats charClass = null;
 	private IntStat maxHealth = null;
 	private int currentHealth = 0;
 	private IntStat attackPower = null;
@@ -31,36 +31,36 @@ public class PlayerManager : MonoBehaviour
 	public void Setup(PlayerStats pStats)
 	{
 		System.Array.Copy(pStats.upgrades, upgrades, GlobalVariables.visibleTraitCount);
-		charClass = pStats.charClass;
+		charClass = pStats.characterClass;
 
-		maxHealth = new IntStat(pStats.charClass.maxHealth);
+		maxHealth = new IntStat(pStats.characterClass.maxHealth);
 		for(int x = 0; x < pStats.upgrades[(int)PlayerStats.UpgradeIndex.Health]; x++)
 			maxHealth.AddModifier(GlobalVariables.healthPerUpgrade);
 		currentHealth = maxHealth.GetStat();
 		healthBar.SetMaxHealth(maxHealth.GetStat());
 
-		attackPower = new IntStat(pStats.charClass.attackPower);
+		attackPower = new IntStat(pStats.characterClass.attackPower);
 		for(int x = 0; x < pStats.upgrades[(int)PlayerStats.UpgradeIndex.AttackPower]; x++)
 			attackPower.AddModifier(GlobalVariables.attackPerUpgrade);
 
-		magicPower = new IntStat(pStats.charClass.magicPower);
+		magicPower = new IntStat(pStats.characterClass.magicPower);
 		for(int x = 0; x < pStats.upgrades[(int)PlayerStats.UpgradeIndex.MagicPower]; x++)
 			magicPower.AddModifier(GlobalVariables.magicPerUpgrade);
 		
-		resistance = new FloatStat(pStats.charClass.resistance);
+		resistance = new FloatStat(pStats.characterClass.resistance);
 		for(int x = 0; x < pStats.upgrades[(int)PlayerStats.UpgradeIndex.Resistance]; x++)
 			resistance.AddModifier(GlobalVariables.resistancePerUpgrade);
 		
-		moveSpeed = new IntStat(pStats.charClass.movespeed);
+		moveSpeed = new IntStat(pStats.characterClass.movespeed);
 		for(int x = 0; x < pStats.upgrades[(int)PlayerStats.UpgradeIndex.Movespeed]; x++)
 			moveSpeed.AddModifier(GlobalVariables.movePerUpgrade);
 		
-		knockbackAmplification = new IntStat(pStats.charClass.knockbackApplication);
-		knockbackResistance = new FloatStat(pStats.charClass.knockbackResistance);
-		jumpHeight = new IntStat(pStats.charClass.jumpHeight);
-		doubleJumps = new IntStat(pStats.charClass.doubleJumps);
-		dashCooldown = new IntStat(pStats.charClass.dashCooldown);
-		dodgeChance = new FloatStat(pStats.charClass.dodgeChance);
+		knockbackAmplification = new IntStat(pStats.characterClass.knockbackApplication);
+		knockbackResistance = new FloatStat(pStats.characterClass.knockbackResistance);
+		jumpHeight = new IntStat(pStats.characterClass.jumpHeight);
+		doubleJumps = new IntStat(pStats.characterClass.doubleJumps);
+		dashCooldown = new IntStat(pStats.characterClass.dashCooldown);
+		dodgeChance = new FloatStat(pStats.characterClass.dodgeChance);
 
 		for(int x = 0; x < GlobalVariables.trinketSlots; x++)
 		{

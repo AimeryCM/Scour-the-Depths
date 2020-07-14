@@ -11,6 +11,8 @@ public class BartenderManager : MonoBehaviour
 	public GameObject uiElement = null;
 	public GameObject layoutManager = null;
 	public List<Sprite> classSymbols = null;
+	public GameObject GameManager = null;
+	[SerializeField] private List<GameObject> characterGameObjects = null;
 
 	void Start()
 	{
@@ -62,6 +64,18 @@ public class BartenderManager : MonoBehaviour
 
 	void ButtonClicked(int index)
 	{
-		Debug.Log("Button " + index + " has been clicked");
+		if(index < characterList.Count)
+		{
+			GameObject oldCharacter = GameObject.FindGameObjectsWithTag("Player")[0];
+			Vector3 characterPosition = oldCharacter.transform.position;
+			Destroy(oldCharacter);
+			GameObject newCharacter = Instantiate(GetClassGameObject(characterList[index].characterClass.charClass), characterPosition, Quaternion.identity);
+			GameManager.GetComponent<PlayerManager>().Setup(characterList[index]);
+		}
+	}
+
+	private GameObject GetClassGameObject(CharClass charClass)
+	{
+		return characterGameObjects[(int)charClass];
 	}
 }

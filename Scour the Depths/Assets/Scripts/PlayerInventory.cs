@@ -53,13 +53,13 @@ public class PlayerInventory : Inventory
 		{
 			Item temp = weapons[slot - size];
 			weapons[slot - size] = otherInfo.occupied ? (Weapon)otherInfo.item : null;
-			return new InventoryInfo(temp, 1);
+			return temp == null ? new InventoryInfo(null, 0) : new InventoryInfo(temp, 1);
 		}
 		if(slot < base.size + weapons.Length + trinkets.Length && otherInfo.item.itemType == ItemType.Trinket)
 		{
 			Item temp = trinkets[slot - size - weapons.Length];
 			trinkets[slot - size - weapons.Length] = otherInfo.occupied ? (Trinket)otherInfo.item : null;
-			return new InventoryInfo(temp, 1);
+			return temp == null ? new InventoryInfo(null, 0) : new InventoryInfo(temp, 1);
 		}
 		return new InventoryInfo(null, 0);
 	}

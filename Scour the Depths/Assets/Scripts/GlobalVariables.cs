@@ -63,7 +63,7 @@ public struct AbilityInfo
 
 public struct PlayerStats
 {
-	public CharacterClass charClass;
+	public CharacterClassStats characterClass;
 	public Item[] equippedItems;
 	public LinkedList<Item> traits;
 	public int[] upgrades;
@@ -77,9 +77,9 @@ public struct PlayerStats
 		Movespeed
 	}
 	
-	public PlayerStats(CharacterClass character, Item[] items, LinkedList<Item> traitList, int[] ups)
+	public PlayerStats(CharacterClassStats character, Item[] items, LinkedList<Item> traitList, int[] ups)
 	{
-		charClass = character;
+		characterClass = character;
 		equippedItems = new Item[GlobalVariables.trinketSlots + GlobalVariables.weaponSlots];
 		if(items.Length > 6)
 			Debug.LogWarning("Attempting to make a PlayerStats struct with more than 6 equipped items");

@@ -20,7 +20,6 @@ public class MovementController : MonoBehaviour
 	private Vector3 velocity = Vector3.zero;
 	private bool facingRight = true;
 	private bool grounded = false;
-	private float jumpForce = 0;
 	private short jumps = 0;
     private CircleCollider2D circleCollider = null;
 	private float horizontalMove = 0f;
@@ -30,7 +29,6 @@ public class MovementController : MonoBehaviour
     {
         playerRigidBody = GetComponent<Rigidbody2D>();
         circleCollider = GetComponent<CircleCollider2D>();
-		jumpForce = CalculateJumpForce(Physics2D.gravity.magnitude, jumpHeight);
 		InputHandler.instance.playerActions["Jump"].performed += ctx => Jump();
     }
 
@@ -73,7 +71,7 @@ public class MovementController : MonoBehaviour
 		{
             //animator.SetTrigger("Jump");
 			playerRigidBody.velocity = new Vector2(playerRigidBody.velocity.x, 0);
-			playerRigidBody.AddForce(Vector2.up * jumpForce * playerRigidBody.mass, ForceMode2D.Impulse);
+			playerRigidBody.AddForce(Vector2.up * CalculateJumpForce(Physics2D.gravity.magnitude, jumpHeight) * playerRigidBody.mass, ForceMode2D.Impulse);
 			jumps++;
 		}
     }

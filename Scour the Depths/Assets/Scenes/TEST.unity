@@ -461,9 +461,10 @@ GameObject:
   - component: {fileID: 210154562}
   - component: {fileID: 210154563}
   - component: {fileID: 210154564}
+  - component: {fileID: 210154566}
   m_Layer: 0
   m_Name: GameManager
-  m_TagString: Untagged
+  m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -663,6 +664,13 @@ MonoBehaviour:
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
+    - m_Name: Primary
+      m_Type: 1
+      m_ExpectedControlType: Button
+      m_Id: 3328f274-5fe9-4305-bec0-621995ae156d
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
     m_Bindings:
     - m_Name: 
       m_Id: ceccd559-c526-4867-adab-6efe4aad400f
@@ -671,6 +679,14 @@ MonoBehaviour:
       m_Processors: 
       m_Groups: 
       m_Action: Punch
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 68fde86f-0c9f-40d4-9a95-b4381380fab6
+      m_Path: <Mouse>/leftButton
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Primary
       m_Flags: 0
   abilityActions:
     m_Name: Ability Actions
@@ -786,6 +802,18 @@ MonoBehaviour:
   - {fileID: 25752504}
   - {fileID: 1908223320}
   playerInventoryManager: {fileID: 210154560}
+--- !u!114 &210154566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 210154559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19bbc797c10df964f9c6644382f5272a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &255379714
 GameObject:
   m_ObjectHideFlags: 0
@@ -4507,6 +4535,8 @@ MonoBehaviour:
   uiElement: {fileID: 2072898247}
   layoutManager: {fileID: 1620945114}
   classSymbols: []
+  GameManager: {fileID: 0}
+  characterGameObjects: []
 --- !u!1 &980958154 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6933428600949336556, guid: d7fa4b9a424db19468735df71be5c0fd,
@@ -6542,7 +6572,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 4, y: 4}
+    oldSize: {x: 3, y: 3}
     newSize: {x: 4, y: 4}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -7990,15 +8020,16 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 819504193
+  m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c8d170d4f7478d74788cd3508ac38a38, type: 3}
+  m_Sprite: {fileID: -451861864502019205, guid: de64ec1f4553bb741a46391c1204f294,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2, y: 2}
+  m_Size: {x: 4, y: 4}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -8012,7 +8043,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1527172626}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.55, y: -1.296, z: 0}
+  m_LocalPosition: {x: 3.16, y: -1.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -8030,10 +8061,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c81021152b7a49741adba68b9e1f4d4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpHeight: 100
+  jumpHeight: 8
   acceleration: 0.135
   airAcceleration: 0
-  maxSpeed: 500
+  maxSpeed: 320
   maxJumps: 5
   boxRayWidth: 1
   boxRayDistance: 1
@@ -8068,7 +8099,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 3
   m_Material: {fileID: 6200000, guid: 9a8ce52c09d0edc4b94dd61b0177c4bb, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -8108,7 +8139,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 4, y: 4}
-    newSize: {x: 2, y: 2}
+    newSize: {x: 4, y: 4}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -8310,7 +8341,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 1546071985}
   inventory: {fileID: 1546071991}
-  ironSword: {fileID: 11400000, guid: f471187a0dcc91649a5a671d2c643049, type: 2}
+  ironSword: {fileID: 11400000, guid: 80004da2ddab2b84fb781e1741c27c4c, type: 2}
   cloak: {fileID: 11400000, guid: c83cc51113942f647ae5caa6bc6cde91, type: 2}
 --- !u!114 &1546071991
 MonoBehaviour:
