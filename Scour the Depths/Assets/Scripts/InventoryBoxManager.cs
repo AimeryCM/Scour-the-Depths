@@ -7,18 +7,27 @@ using UnityEngine.EventSystems;
 public class InventoryBoxManager : MonoBehaviour, IDropHandler
 {
 	public InventoryOwner owner = InventoryOwner.Player;
+	[SerializeField] private Sprite emptyIcon = null;
+	[SerializeField] private Sprite occupiedIcon = null;
 	[SerializeField] private Image iconSpot = null;
 	[SerializeField] private Sprite defaultSprite = null;
 	private int slotID = -1;
 
+	void Start()
+	{
+		UpdateBackgroundIcon();
+	}
+
 	public void UpdateIcon(Sprite icon)
 	{
 		iconSpot.sprite = icon;
+		UpdateBackgroundIcon();
 	}
 
 	public void SetIconToDefault()
 	{
 		iconSpot.sprite = defaultSprite;
+		UpdateBackgroundIcon();
 	}
 
 	public void OnDrop(PointerEventData eventData)
@@ -34,7 +43,8 @@ public class InventoryBoxManager : MonoBehaviour, IDropHandler
 					{
 						Sprite temp = iconSpot.sprite;
 						UpdateIcon(eventData.pointerDrag.GetComponent<Image>().sprite);
-						eventData.pointerDrag.GetComponent<Image>().sprite = temp;
+						eventData.pointerDrag.GetComponentInParent<InventoryBoxManager>().UpdateIcon(temp);
+						//eventData.pointerDrag.GetComponent<Image>().sprite = temp;
 					}
 				}
 				if((owner == InventoryOwner.Blacksmith && otherBox.owner == InventoryOwner.Player) || (owner == InventoryOwner.Player && otherBox.owner == InventoryOwner.Blacksmith))
@@ -43,7 +53,7 @@ public class InventoryBoxManager : MonoBehaviour, IDropHandler
 					{
 						Sprite temp = iconSpot.sprite;
 						UpdateIcon(eventData.pointerDrag.GetComponent<Image>().sprite);
-						eventData.pointerDrag.GetComponent<Image>().sprite = temp;
+						eventData.pointerDrag.GetComponentInParent<InventoryBoxManager>().UpdateIcon(temp);
 					}
 				}
 			}
@@ -61,5 +71,18 @@ public class InventoryBoxManager : MonoBehaviour, IDropHandler
 	public int GetID()
 	{
 		return slotID;
+	}
+
+	private void UpdateBackgroundIcon()
+	{
+		Image thisImage = GetComponent<Image>();
+		if(iconSpot.sprite.Equals(defaultSprite) && !thisImage.sprite.Equals(emptyIcon))
+		{
+			thisImage.sprite = emptyIcon;
+		}
+		else if(!iconSpot.sprite.Equals(defaultSprite) && !thisImage.sprite.Equals(occupiedIcon))
+		{
+			thisImage.sprite = occupiedIcon;
+		}
 	}
 }
