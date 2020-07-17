@@ -62,6 +62,7 @@ public class PlayerManager : MonoBehaviour
 		dashCooldown = new IntStat(pStats.characterClass.dashCooldown);
 		dodgeChance = new FloatStat(pStats.characterClass.dodgeChance);
 
+/* throws an error
 		for(int x = 0; x < GlobalVariables.trinketSlots; x++)
 		{
 			foreach(StatModifier statMod in ((Trinket)pStats.equippedItems[x + GlobalVariables.weaponSlots]).modifiers)
@@ -69,7 +70,7 @@ public class PlayerManager : MonoBehaviour
 				ApplyModifier(statMod.stat, statMod.percent, statMod.amount);
 			}
 		}
-		
+*/
 		UpdateStatText();
 	}
 

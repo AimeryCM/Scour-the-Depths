@@ -67,6 +67,7 @@ public struct PlayerStats
 	public Item[] equippedItems;
 	public LinkedList<Item> traits;
 	public int[] upgrades;
+	public string name;
 	
 	public enum UpgradeIndex
 	{
@@ -97,5 +98,12 @@ public struct PlayerStats
 		}
 		upgrades = new int[GlobalVariables.visibleTraitCount];
 		System.Array.Copy(ups, upgrades, upgrades.Length);
+		//maybe add a list and randomly chose one
+		name = "Steve";
+	}
+
+	public PlayerStats(CharacterClassStats character, Item[] items1, LinkedList<Item> traitList, int[] ups, string name) : this(character, items1, traitList, ups)
+	{
+		this.name = name;
 	}
 }

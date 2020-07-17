@@ -16,7 +16,7 @@ public class BartenderManager : MonoBehaviour
 
 	void Start()
 	{
-		TestPopulate();
+		//TestPopulate();
 		HideUI();
 	}
 
@@ -55,22 +55,46 @@ public class BartenderManager : MonoBehaviour
 
 	public void Populate(List<PlayerStats> playerStats)
 	{
+		int x = 0;
+		characterList = new List<PlayerStats>();
 		foreach(PlayerStats stats in playerStats)
 		{
 			GameObject displayElement = Instantiate(characterDisplayElement, Vector3.zero, Quaternion.identity);
-			displayElement.transform.parent = layoutManager.transform;
+			displayElement.transform.SetParent(layoutManager.transform);
+			CharacterDisplayElementHandler currentHandler = displayElement.GetComponent<CharacterDisplayElementHandler>();
+			currentHandler.SetLevel(CalculateLevelFromStats(stats));
+			currentHandler.SetID(x);
+			currentHandler.SetName(stats.name);
+			//temporary, needs to also factor in items, traits, and upgrades
+			currentHandler.SetStats(stats.characterClass.attackPower, stats.characterClass.magicPower, stats.characterClass.resistance, stats.characterClass.movespeed);
+			currentHandler.button.onClick.AddListener(delegate{ButtonClicked(currentHandler.GetID());});
+			characterList.Add(stats);
+			x++;
 		}
+	}
+
+	private int CalculateLevelFromStats(PlayerStats stats)
+	{
+		int result = 0;
+		foreach(int quant in stats.upgrades)
+		{
+			result += quant;
+		}
+		return result;
 	}
 
 	void ButtonClicked(int index)
 	{
-		if(index < characterList.Count)
+		if(characterList != null)
 		{
-			GameObject oldCharacter = GameObject.FindGameObjectsWithTag("Player")[0];
-			Vector3 characterPosition = oldCharacter.transform.position;
-			Destroy(oldCharacter);
-			GameObject newCharacter = Instantiate(GetClassGameObject(characterList[index].characterClass.charClass), characterPosition, Quaternion.identity);
-			GameManager.GetComponent<PlayerManager>().Setup(characterList[index]);
+			if(index < characterList.Count)
+			{
+				GameObject oldCharacter = GameObject.FindGameObjectsWithTag("Player")[0];
+				Vector3 characterPosition = oldCharacter.transform.position;
+				Destroy(oldCharacter);
+				GameObject newCharacter = Instantiate(GetClassGameObject(characterList[index].characterClass.charClass), characterPosition, Quaternion.identity);
+				GameManager.GetComponent<PlayerManager>().Setup(characterList[index]);
+			}
 		}
 	}
 

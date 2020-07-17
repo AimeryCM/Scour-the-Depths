@@ -13,17 +13,24 @@ public class CameraMovement : MonoBehaviour
 
     void Start()
     {
-        GameObject[] characterList = GameObject.FindGameObjectsWithTag("Player");
-		if(characterList.Length < 0)
-			Debug.LogError("CameraMovement script could not find an object with the character tag");
-		else
-			characterPosition = characterList[0].GetComponent<Transform>();
+		FindCharacter();
 		characterBaseY = characterPosition.position.y;
     }
 
     void FixedUpdate()
     {
+		if(characterPosition == null)
+			FindCharacter();
 		Vector3 targetPosition = new Vector3(characterPosition.position.x, (characterPosition.position.y * cameraYStickyMod + characterBaseY) / (1 + cameraYStickyMod), characterPosition.position.z);
 		transform.position = Vector3.SmoothDamp(transform.position, targetPosition + offset, ref velocity, cameraAcceleration);
     }
+
+	private void FindCharacter()
+	{
+		GameObject[] characterList = GameObject.FindGameObjectsWithTag("Player");
+		if(characterList.Length < 0)
+			Debug.LogError("CameraMovement script could not find an object with the character tag");
+		else
+			characterPosition = characterList[0].GetComponent<Transform>();
+	}
 }

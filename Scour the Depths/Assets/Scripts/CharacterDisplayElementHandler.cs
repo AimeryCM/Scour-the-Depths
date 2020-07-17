@@ -6,13 +6,13 @@ using UnityEngine.UI;
 
 public class CharacterDisplayElementHandler : MonoBehaviour
 {
-	public TextMeshProUGUI nameText = null;
-	public TextMeshProUGUI levelText = null;
-	public TextMeshProUGUI attackText = null;
-	public TextMeshProUGUI magicText = null;
-	public TextMeshProUGUI defenseText = null;
-	public TextMeshProUGUI speedText = null;
-	public Image characterIcon = null;
+	[SerializeField] private TextMeshProUGUI nameText = null;
+	[SerializeField] private TextMeshProUGUI levelText = null;
+	[SerializeField] private TextMeshProUGUI attackText = null;
+	[SerializeField] private TextMeshProUGUI magicText = null;
+	[SerializeField] private TextMeshProUGUI defenseText = null;
+	[SerializeField] private TextMeshProUGUI speedText = null;
+	[SerializeField] private Image characterIcon = null;
 	public Button button = null;
 	private int buttonID = -1;
 
