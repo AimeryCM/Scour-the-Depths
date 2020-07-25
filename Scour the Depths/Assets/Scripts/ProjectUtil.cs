@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 public class ProjectUtil
@@ -48,5 +49,19 @@ public class ProjectUtil
 		if(slot >= GlobalVariables.playerInventorySlots + GlobalVariables.hotbarSlots + GlobalVariables.weaponSlots && slot < GlobalVariables.totalPlayerInventorySlots)
 			return true;
 		return false;
+	}
+
+	public static string ArrayToString<T>(T[] array)
+	{
+		StringBuilder builder = new StringBuilder();
+		builder.Append("[");
+		for(int x = 0; x < array.Length; x++)
+		{
+			if(x != 0)
+				builder.Append(", ");
+			builder.Append(array[x].ToString());
+		}
+		builder.Append("]");
+		return builder.ToString();
 	}
 }

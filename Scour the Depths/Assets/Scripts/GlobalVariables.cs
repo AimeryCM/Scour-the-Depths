@@ -17,6 +17,7 @@ public static class GlobalVariables
 	public static int movePerUpgrade = 1;
 }
 
+public enum Direction{North, East, South, West}
 
 public enum Ability{Default, Invisibility, Summon}
 
